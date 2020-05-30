@@ -12,6 +12,7 @@
         <module>register-center</module>
         <module>api-gateway</module>
         <module>common-common</module>
+        <module>mybaties-generator</module>
     </modules>
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>
