@@ -1,10 +1,6 @@
 package com.study.gateway.exception;
 
-import com.springboot.cloud.common.core.entity.vo.Result;
-import com.springboot.cloud.common.core.exception.SystemErrorType;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
+
 import io.netty.channel.ConnectTimeoutException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.support.NotFoundException;
@@ -18,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 public class GateWayExceptionHandlerAdvice {
 
-    @ExceptionHandler(value = {ResponseStatusException.class})
+    /*@ExceptionHandler(value = {ResponseStatusException.class})
     public Result handle(ResponseStatusException ex) {
         log.error("response status exception:{}", ex.getMessage());
         return Result.fail(SystemErrorType.GATEWAY_ERROR);
@@ -88,5 +84,5 @@ public class GateWayExceptionHandlerAdvice {
             result = handle((Exception) throwable);
         }
         return result;
-    }
+    }*/
 }
