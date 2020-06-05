@@ -5,6 +5,7 @@ import com.study.common.core.shiro.cache.ShiroRedisCacheManager;
 import com.study.common.core.shiro.filter.CusFormAuthenticationFilter;
 import com.study.common.core.shiro.filter.CusPermissionsAuthorizationFilter;
 import com.study.common.core.shiro.filter.CusRolesAuthorizationFilter;
+import com.study.common.core.shiro.filter.KickoutSessionControlFilter;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
@@ -13,6 +14,7 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
+import org.slf4j.Logger;
 import org.apache.shiro.session.mgt.AbstractSessionManager;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -23,6 +25,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -42,6 +45,9 @@ public abstract class AbstractShiroConfig {
     private static final String MD5 = "MD5";
     private static final String cookName = "DCS_JSESSIONID";
     private static final String cacheName = "shiro_SessionCache";
+
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract List<AuthorizingRealm> authorizingRealms();
 
@@ -63,6 +69,25 @@ public abstract class AbstractShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
         return shiroFilterFactoryBean;
     }
+
+
+    protected ShiroFilterFactoryBean createShiroFilterFactoryBean(SecurityManager securityManager, Map<String, String> filterChainDefinitionMap) {
+        logger.info("注入Shiro的Web过滤器-->shiroFilter：{}", ShiroFilterFactoryBean.class);
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.getFilters().put("authc", new CusFormAuthenticationFilter());
+        shiroFilterFactoryBean.getFilters().put("roles", new CusFormAuthenticationFilter());
+        shiroFilterFactoryBean.getFilters().put("perms", new CusPermissionsAuthorizationFilter());
+        shiroFilterFactoryBean.getFilters().put("kickout", this.createKickoutSessionControlFilter());
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    public KickoutSessionControlFilter createKickoutSessionControlFilter() {
+        return new KickoutSessionControlFilter();
+    }
+
 
     @Bean
     protected SecurityManager securityManager(SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager cacheManager) {

@@ -1,7 +1,6 @@
 package ${package.Controller};
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.opencloud.common.model.PageParams;
 import com.opencloud.common.model.ResultBody;
 import io.swagger.annotations.Api;

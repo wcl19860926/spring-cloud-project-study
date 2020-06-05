@@ -23,7 +23,7 @@ public class GeneratorService {
 
 
     public static void main(String[] args) {
-        GenerateConfig  con  = new GenerateConfig();
+        GenerateConfig con = new GenerateConfig();
         GeneratorService.execute(con);
     }
 
@@ -87,13 +87,13 @@ public class GeneratorService {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setSuperEntityColumns("create_time", "update_time");
         // mapper 父类
-        strategy.setSuperMapperClass("com.study.common.mybatis.base.mapper.SuperMapper");
+        strategy.setSuperMapperClass("com.study.common.core.mybaties.mapper.BaseMapper");
         // 实体父类
-        strategy.setSuperEntityClass("com.study.common.mybatis.base.entity.AbstractEntity");
+        strategy.setSuperEntityClass("com.study.common.core.mybaties.entity.BaseEntity");
         // 接口父类
-        strategy.setSuperServiceClass("com.study.common.mybatis.base.service.IBaseService");
+        strategy.setSuperServiceClass("com.study.common.core.mybaties.service.BaseService");
         // 接口实现类父类
-        strategy.setSuperServiceImplClass("com.study.common.mybatis.base.service.impl.BaseServiceImpl");
+        strategy.setSuperServiceImplClass("com.study.common.core.mybaties.service.impl.BaseServiceImpl");
         // 需要生成的表
         strategy.setInclude(generateConfig.getIncludeTables());
 
@@ -130,27 +130,6 @@ public class GeneratorService {
                 // to do nothing
             }
         };
-        String jsPath = "/templates/api.js.vm";
-        String vuePath = "/templates/index.vue.vm";
-        List<FileOutConfig> focList = new ArrayList<>();
-        // 自定义配置会被优先输出
-        focList.add(new FileOutConfig(jsPath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                String path = gc.getOutputDir() + File.separator + pc.getParent().replace(".", File.separator) + File.separator + "js" + File.separator + tableInfo.getEntityName() + ".js";
-                return path;
-            }
-        });
-        focList.add(new FileOutConfig(vuePath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String path = gc.getOutputDir() + File.separator + pc.getParent().replace(".", File.separator) + File.separator + "view" + File.separator + tableInfo.getEntityName() + File.separator + "index.vue";
-                return path;
-            }
-        });
-
-        cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         mpg.setPackageInfo(pc);
         // 执行生成
