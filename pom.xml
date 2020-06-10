@@ -12,7 +12,6 @@
         <module>register-center</module>
         <module>api-gateway</module>
         <module>common-common</module>
-        <module>mybaties-generator</module>
         <module>user-service</module>
         <module>mybaties-simple-generator</module>
     </modules>

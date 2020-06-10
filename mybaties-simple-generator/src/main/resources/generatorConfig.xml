@@ -67,8 +67,8 @@
          generatedKey  ： 它是主建列，数据库类型是DB2。这将导致MBG在生成的语句中生成正确的元素，以便可以返回新生成的键(使用特定于DB2的SQL)。
         -->
 
-        <table schema="dev2" tableName="calc_order_matched_freight" domainObjectName="CalcMatchedFreight">
-            <property name="rootClass" value="com.common.base.dao.entity.EntityBase"/>
+        <table schema="dev2" tableName="calc_order_matched_freight" domainObjectName="CalcMatchedFreight"  enableInsert="true" enableUpdateByPrimaryKey="true">
+            <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
             <property name="useActualColumnNames" value="true"/>
         </table>
 
