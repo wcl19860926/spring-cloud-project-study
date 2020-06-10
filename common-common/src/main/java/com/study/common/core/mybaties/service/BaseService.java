@@ -13,13 +13,20 @@ import java.util.Map;
 
 public interface BaseService<T extends BaseEntity, PK extends Serializable> {
 
-    T save(T entity);
+    T insert(T entity);
+
+    T insertSelective(T entity);
+
+    Integer update(T entity);
+
+
+    Integer updateSelective(T entity);
 
     void delete(PK id);
 
     T findById(PK id);
 
-    List<T> findAll();
+    List<T> findList(Map<String, Object> params);
 
 
     List<T> selectList(String statement, @Param("map") Map<String, Object> params);

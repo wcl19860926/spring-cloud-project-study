@@ -21,12 +21,12 @@ import java.util.Map;
 
 public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializable> implements BaseService<T, PK> {
 
-    private static final String SELECT_BY_PAGE_LIST = "queryListPage";
+    private static final String SELECT_BY_PAGE_LIST = "queryList";
 
     private IdGeneratorService idGeneratorService;
 
 
-    public BaseServiceImpl( ) {
+    public BaseServiceImpl() {
         this.idGeneratorService = SnowflakeIdGeneratorHolder.getInstance();
     }
 
@@ -38,26 +38,47 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
     @Override
     public T findById(PK id) {
         Assert.notNull(id, "通过主键查找时，给出的id不能为空");
-        return getMapper().findById(id);
+        return getMapper().selectByPrimaryKey(id);
     }
 
     @Override
-    public T save(T entity) {
+    public T insert(T entity) {
         Assert.notNull(entity, "待保存的对象不能为空");
         entity.setId(idGeneratorService.generate());
         getMapper().insert(entity);
         return entity;
     }
 
+
     @Override
-    public void delete(PK id) {
-        Assert.notNull(id, "删除对象时，没有给出id");
-        getMapper().delete(id);
+    public T insertSelective(T entity) {
+        Assert.notNull(entity, "待保存的对象不能为空");
+        entity.setId(idGeneratorService.generate());
+        getMapper().insertSelective(entity);
+        return entity;
     }
 
     @Override
-    public List<T> findAll() {
-        return getMapper().findAll();
+    public Integer update(T entity) {
+        Assert.notNull(entity, "待保存的对象不能为空");
+        return getMapper().update(entity);
+    }
+
+    @Override
+    public Integer updateSelective(T entity) {
+        Assert.notNull(entity, "待保存的对象不能为空");
+        return getMapper().updateSelective(entity);
+    }
+
+    @Override
+    public void delete(PK id) {
+        Assert.notNull(id, "删除对象时，没有给出id");
+        getMapper().deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<T> findList(Map<String, Object> params) {
+        return getMapper().queryList(params);
     }
 
 
@@ -96,7 +117,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
     }
 
 
-
     /**
      * 自定义sql查询List<EntityMap>
      */
@@ -105,8 +125,10 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
         Page pageInfo = PageHelper.startPage(params.getPageIndex(), params.getPageSize());
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
-        List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
+        List<T> data = sqlSession.selectList(getMapperName() + statement, params);
         pageData.setData(data);
         return ResultDto.sucess(pageData);
     }
+
+
 }

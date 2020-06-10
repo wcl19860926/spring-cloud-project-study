@@ -1,20 +1,29 @@
 package com.study.common.core.mybaties.mapper;
 
 import com.study.common.core.mybaties.entity.BaseEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface BaseMapper<T extends BaseEntity, PK extends Serializable> {
 
-    void insert(T entity);
+    Integer insert(T entity);
 
-    void delete(PK id);
+    Integer deleteByPrimaryKey(PK id);
 
-    void update(T entity);
 
-    T findById(PK id);
+    T insertSelective(T entity);
 
-    List<T> findAll();
+    Integer update(T entity);
+
+
+    Integer updateSelective(T entity);
+
+
+    T selectByPrimaryKey(PK id);
+
+    List<T> queryList(@Param("map") Map<String, Object> params);
 
 }
