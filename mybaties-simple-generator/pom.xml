@@ -33,7 +33,7 @@
                 <configuration>
                     <configurationFile>src/main/resources/generatorConfig.xml
                     </configurationFile>
-                    <overwrite>false</overwrite>
+                    <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
                 <dependencies>
