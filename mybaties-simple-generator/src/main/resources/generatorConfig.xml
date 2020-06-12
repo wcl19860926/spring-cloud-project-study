@@ -18,9 +18,9 @@
 
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-uf6wjw8x3py91q5hiho.mysql.rds.aliyuncs.com/dev2?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"
+                        connectionURL="jdbc:mysql://localhost/boo-shiro?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"
                         userId="root"
-                        password="Rootroot1!">
+                        password="root">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -32,8 +32,8 @@
         targetProject 的写法：
            1. 相对路径： src/main/java
         -->
-        <javaModelGenerator targetPackage="com.study.entity"
-                            targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.study.user.entity.sys"
+                            targetProject="../user-service/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -44,12 +44,12 @@
            2. 相对路径: ${basedir}/../xxx/src/main/resources/mapper
            3. 绝对路径：/Users/Charles/workspace/app-oms/src/resources/mapper
         -->
-        <sqlMapGenerator targetPackage="com.study.xml.mapper"
-                         targetProject="src/main/resources/mapper">
+        <sqlMapGenerator targetPackage="xml.sys"
+                         targetProject="../user-service/src/main/resources/mapper">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.mapper"
-                             targetProject="src/main/java/">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.user.mapper.sys"
+                             targetProject="../user-service/src/main/java/">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -67,8 +67,32 @@
          generatedKey  ： 它是主建列，数据库类型是DB2。这将导致MBG在生成的语句中生成正确的元素，以便可以返回新生成的键(使用特定于DB2的SQL)。
         -->
 
-        <table schema="dev2" tableName="calc_order_matched_freight" domainObjectName="CalcMatchedFreight"
-               enableSelectByExample="false" enableDeleteByExample="false" enableQueryListPage="true"
+        <table schema="boo-shiro" tableName="sys_user" domainObjectName="SysUser"
+               enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false">
+            <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_role" domainObjectName="SsyRole"
+               enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false">
+            <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_role_user" domainObjectName="SysRoleUser"
+               enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false">
+            <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_permission" domainObjectName="SysPermission"
+               enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false">
+            <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_permission_role" domainObjectName="SysPermissionRole"
+               enableSelectByExample="false" enableDeleteByExample="false"
                enableCountByExample="false" enableUpdateByExample="false">
             <property name="rootClass" value="com.study.common.core.mybaties.entity.BaseEntity"/>
             <property name="useActualColumnNames" value="true"/>

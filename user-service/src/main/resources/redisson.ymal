@@ -1,0 +1,13 @@
+spring:
+  redis:
+    cluster:
+      nodes: ''
+    database: ''
+    host: ''
+    password: ''
+    port: ''
+#    sentinel:
+#      master: ''
+#      nodes: ''
+#   ssl: ''
+    timeout: ''

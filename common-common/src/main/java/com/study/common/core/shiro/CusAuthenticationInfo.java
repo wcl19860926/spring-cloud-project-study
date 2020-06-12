@@ -27,6 +27,8 @@ public class CusAuthenticationInfo extends SimpleAuthenticationInfo {
         this.username = username;
     }
 
+    public  CusAuthenticationInfo(){}
+
     /**
      *
      * @param pros

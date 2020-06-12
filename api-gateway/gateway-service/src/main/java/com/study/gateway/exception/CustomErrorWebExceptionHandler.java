@@ -42,7 +42,7 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
     @Override
     protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         Map<String, Object> error = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.ALL));
-        HttpStatus errorStatus = getHttpStatus(error);
+        int errorStatus = getHttpStatus(error);
         Throwable throwable = getError(request);
         return ServerResponse.status(errorStatus)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
