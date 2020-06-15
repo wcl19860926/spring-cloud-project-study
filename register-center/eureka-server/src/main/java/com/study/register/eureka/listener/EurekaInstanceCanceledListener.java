@@ -31,6 +31,7 @@ public class EurekaInstanceCanceledListener implements ApplicationListener {
         if (applicationEvent instanceof EurekaInstanceCanceledEvent) {
             EurekaInstanceCanceledEvent event = (EurekaInstanceCanceledEvent) applicationEvent;
             // 获取当前Eureka实例中的节点信息
+            @SuppressWarnings("all")
             PeerAwareInstanceRegistry registry = EurekaServerContextHolder.getInstance().getServerContext().getRegistry();
             Applications applications = registry.getApplications();
             // 遍历获取已注册节点中与当前失效节点ID一致的节点信息

@@ -25,6 +25,15 @@ public class BizException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
+    public BizException(String errorMsg  ,Throwable e) {
+        super( e);
+        this.errorMsg = errorMsg;
+    }
+
+    public BizException(Throwable e) {
+        super( e);
+    }
+
     @Override
     public String getMessage() {
         return this.errorMsg;

@@ -285,6 +285,7 @@ public class FullyQualifiedTable {
      */
     public String getSubPackageForModel(boolean isSubPackagesEnabled) {
         StringBuilder sb = new StringBuilder();
+
         sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));
 
         if (stringHasValue(domainObjectSubPackage)) {

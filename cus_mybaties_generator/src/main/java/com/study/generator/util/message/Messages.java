@@ -1,14 +1,15 @@
 package com.study.generator.util.message;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-    private static final String BUNDLE_NAME = "org.mybatis.generator.internal.util.messages.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "com.study.generator.18n.messages"; //$NON-NLS-1$
 
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-            .getBundle(BUNDLE_NAME);
+            .getBundle(BUNDLE_NAME  , Locale.US);
 
     private Messages() {
     }

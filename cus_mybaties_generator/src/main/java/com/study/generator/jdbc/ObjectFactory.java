@@ -24,6 +24,7 @@ import com.study.generator.jdbc.connection.ConnectionFactory;
 import com.study.generator.jdbc.connection.JDBCConnectionFactory;
 import com.study.generator.jdbc.introspect.IntrospectedColumn;
 import com.study.generator.jdbc.introspect.IntrospectedTable;
+import com.study.generator.jdbc.introspect.IntrospectedTableMyBatis3Impl;
 import com.study.generator.jdbc.java.JavaTypeResolver;
 import com.study.generator.jdbc.java.JavaTypeResolverDefaultImpl;
 import com.study.generator.plugin.Plugin;
@@ -256,7 +257,8 @@ public class ObjectFactory {
      * @return the introspected table
      */
     public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
-        String type = context.getTargetRuntime();
+       // String type = context.getTargetRuntime();
+        String type = IntrospectedTableMyBatis3Impl.class.getName();
         IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);
         answer.setContext(context);
 

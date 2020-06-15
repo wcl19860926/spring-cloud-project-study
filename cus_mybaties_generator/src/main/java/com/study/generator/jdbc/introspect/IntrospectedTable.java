@@ -236,28 +236,7 @@ public abstract class IntrospectedTable {
         return internalAttributes.get(InternalAttribute.ATTR_PRIMARY_KEY_TYPE);
     }
 
-    /**
-     * Gets the base record type.
-     *
-     * @return the type for the record (the class that holds non-primary key and non-BLOB fields). Note that the value
-     *         will be calculated regardless of whether the table has these columns or not.
-     */
-    public String getBaseRecordType() {
-        return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);
-    }
 
-    public String getKotlinRecordType() {
-        return internalAttributes.get(InternalAttribute.ATTR_KOTLIN_RECORD_TYPE);
-    }
-
-    /**
-     * Gets the example type.
-     *
-     * @return the type for the example class.
-     */
-    public String getExampleType() {
-        return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_TYPE);
-    }
 
     /**
      * Gets the record with blo bs type.
@@ -372,7 +351,7 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
-        setSelectAllStatementId("selectAll"); //$NON-NLS-1$
+        setSelectAllStatementId("selectList"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
         setSelectByPrimaryKeyStatementId("selectByPrimaryKey"); //$NON-NLS-1$
@@ -809,14 +788,6 @@ public abstract class IntrospectedTable {
     }
 
 
-    /**
-     * This method should return the number of progress messages that will be
-     * send during the generation phase.
-     * 
-     * @return the number of progress messages
-     */
-    public abstract int getGenerationSteps();
-
 
 
     public TableConfiguration getTableConfiguration() {
@@ -953,14 +924,6 @@ public abstract class IntrospectedTable {
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
 
-    /**
-     * Should return true if an XML generator is required for this table. This method will be called during validation
-     * of the configuration, so it should not rely on database introspection. This method simply tells the validator if
-     * an XML configuration is normally required for this implementation.
-     *
-     * @return true, if successful
-     */
-    public abstract boolean requiresXMLGenerator();
 
     public Context getContext() {
         return context;
