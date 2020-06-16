@@ -7,9 +7,6 @@ import java.nio.charset.StandardCharsets;
 public interface Constants {
 
 
-    String MODULE_NAME = "ModuleName";
-
-    String ENTITY = "Entity";
     String SERVICE = "Service";
     String SERVICE_IMPL = "ServiceImpl";
     String MAPPER = "Mapper";
@@ -25,10 +22,8 @@ public interface Constants {
 
     String JAVA_TMPDIR = "java.io.tmpdir";
     String UTF8 = StandardCharsets.UTF_8.name();
-    String UNDERLINE = "_";
-
     String JAVA_SUFFIX = StringPool.DOT_JAVA;
-    String KT_SUFFIX = ".kt";
+
     String XML_SUFFIX = ".xml";
 
     String TEMPLATE_ENTITY_JAVA = "/templates/entity.java";
@@ -42,7 +37,5 @@ public interface Constants {
     String VM_LOAD_PATH_KEY = "file.resource.loader.class";
     String VM_LOAD_PATH_VALUE = "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader";
 
-    String SUPER_MAPPER_CLASS = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
-    String SUPER_SERVICE_CLASS = "com.baomidou.mybatisplus.extension.service.IService";
-    String SUPER_SERVICE_IMPL_CLASS = "com.baomidou.mybatisplus.extension.service.impl.ServiceImpl";
+
 }

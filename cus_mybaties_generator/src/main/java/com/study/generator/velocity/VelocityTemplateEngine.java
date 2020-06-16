@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.study.generator.constants.Constants;
+import com.study.generator.model.TableInfo;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -12,6 +13,7 @@ import org.apache.velocity.app.VelocityEngine;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -20,9 +22,13 @@ public class VelocityTemplateEngine extends AbstractVelocityTemplateEngine {
     private static final String DOT_VM = ".vm";
     private VelocityEngine velocityEngine;
 
-    @Override
+    public VelocityTemplateEngine(List<TableInfo> tableInfoList) {
+        super(tableInfoList);
+    }
+
+
     public VelocityTemplateEngine init(ConfigBuilder configBuilder) {
-        super.init(configBuilder);
+
         if (null == velocityEngine) {
             Properties p = new Properties();
             p.setProperty(Constants.VM_LOAD_PATH_KEY, Constants.VM_LOAD_PATH_VALUE);

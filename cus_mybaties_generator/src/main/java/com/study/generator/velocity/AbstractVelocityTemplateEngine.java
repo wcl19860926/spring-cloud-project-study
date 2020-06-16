@@ -1,85 +1,53 @@
 package com.study.generator.velocity;
 
 
-
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.study.generator.constants.Constants;
 import com.study.generator.constants.StringPool;
-import com.study.generator.context.Context;
-import com.study.generator.toolkit.PackageHelper;
-import com.study.generator.util.CollectionUtils;
+import com.study.generator.enums.FileType;
+import com.study.generator.model.TableInfo;
 import com.study.generator.util.StringUtils;
-import com.study.generator.config.TemplateConfig;
-import com.study.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractVelocityTemplateEngine {
 
+
+    private List<TableInfo> tableInfoList;
+
     protected static final Logger logger = LoggerFactory.getLogger(AbstractVelocityTemplateEngine.class);
-    /**
-     * 配置信息
-     */
-    private ConfigBuilder configBuilder;
 
 
-    /**
-     * 模板引擎初始化
-     */
-    public AbstractVelocityTemplateEngine init(ConfigBuilder configBuilder) {
-        this.configBuilder = configBuilder;
-        return this;
+    public AbstractVelocityTemplateEngine(List<TableInfo> tableInfoList) {
+        this.tableInfoList = tableInfoList;
     }
 
-
-    /**
+    /*
      * 输出 java xml 文件
      */
     public AbstractVelocityTemplateEngine batchOutput() {
         try {
-            List<TableInfo> tableInfoList = getConfigBuilder().getTableInfoList();
             for (TableInfo tableInfo : tableInfoList) {
                 Map<String, Object> objectMap = getObjectMap(tableInfo);
-                Map<String, String> pathInfo = getConfigBuilder().getPathInfo();
-                TemplateConfig template = Context.getTemplateConfig();
-                // 自定义内容
-                InjectionConfig injectionConfig = getConfigBuilder().getInjectionConfig();
-                if (null != injectionConfig) {
-                    injectionConfig.initMap();
-                    objectMap.put("cfg", injectionConfig.getMap());
-                    List<FileOutConfig> focList = Context.getFileOutConfig();
-                    if (CollectionUtils.isNotEmpty(focList)) {
-                        for (FileOutConfig foc : focList) {
-                            if (isCreate(FileType.OTHER, foc.outputFile(tableInfo))) {
-                                writer(objectMap, foc.getTemplatePath(), foc.outputFile(tableInfo));
-                            }
-                        }
-                    }
-                }
                 // Mp.java
-                String entityName = tableInfo.getEntityName();
+               /* String entityName = tableInfo.getEntityName();
                 if (null != entityName && null != pathInfo.get(Constants.ENTITY_PATH)) {
                     String entityFile = String.format((pathInfo.get(Constants.ENTITY_PATH) + File.separator + "%s" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.ENTITY, entityFile)) {
                         writer(objectMap, templateFilePath(template.getEntity(getConfigBuilder().getGlobalConfig().isKotlin())), entityFile);
                     }
-                }
+                }*/
                 // MpMapper.java
-                if (null != tableInfo.getMapperName() && null != pathInfo.get(Constants.MAPPER_PATH)) {
+                /*if (null != tableInfo.getMapperName() && null != pathInfo.get(Constants.MAPPER_PATH)) {
                     String mapperFile = String.format((pathInfo.get(Constants.MAPPER_PATH) + File.separator + tableInfo.getMapperName() + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.MAPPER, mapperFile)) {
                         writer(objectMap, templateFilePath(template.getMapper()), mapperFile);
@@ -112,7 +80,7 @@ public abstract class AbstractVelocityTemplateEngine {
                     if (isCreate(FileType.CONTROLLER, controllerFile)) {
                         writer(objectMap, templateFilePath(template.getController()), controllerFile);
                     }
-                }
+                }*/
             }
         } catch (Exception e) {
             logger.error("无法创建文件，请检查配置信息！", e);
@@ -133,43 +101,18 @@ public abstract class AbstractVelocityTemplateEngine {
     /**
      * 处理输出目录
      */
-    public AbstractVelocityTemplateEngine mkdirs() {
-        getConfigBuilder().getPathInfo().forEach((key, value) -> {
-            File dir = new File(value);
-            if (!dir.exists()) {
-                boolean result = dir.mkdirs();
-                if (result) {
-                    logger.debug("创建目录： [" + value + "]");
-                }
-            }
-        });
-        return this;
-    }
-
-
-    /**
-     * 打开输出目录
-     */
-    public void open() {
-        String outDir = getConfigBuilder().getGlobalConfig().getOutputDir();
-        if (getConfigBuilder().getGlobalConfig().isOpen()
-                && StringUtils.isNotEmpty(outDir)) {
-            try {
-                String osName = System.getProperty("os.name");
-                if (osName != null) {
-                    if (osName.contains("Mac")) {
-                        Runtime.getRuntime().exec("open " + outDir);
-                    } else if (osName.contains("Windows")) {
-                        Runtime.getRuntime().exec("cmd /c start " + outDir);
-                    } else {
-                        logger.debug("文件输出目录:" + outDir);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+    protected void mkdirs(String path) {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            boolean result = dir.mkdirs();
+            if (result) {
+                logger.debug("创建目录： [" + path + "]");
             }
         }
     }
+
+
+
 
 
     /**
@@ -180,42 +123,17 @@ public abstract class AbstractVelocityTemplateEngine {
      */
     public Map<String, Object> getObjectMap(TableInfo tableInfo) {
         Map<String, Object> objectMap = new HashMap<>(30);
-        ConfigBuilder config = getConfigBuilder();
-        if (config.getStrategyConfig().isControllerMappingHyphenStyle()) {
-            objectMap.put("controllerMappingHyphenStyle", config.getStrategyConfig().isControllerMappingHyphenStyle());
-            objectMap.put("controllerMappingHyphen", StringUtils.camelToHyphen(tableInfo.getEntityPath()));
+        objectMap.put("author", "wclTest");
+        try {
+            BeanInfo tableBeanInfo = Introspector.getBeanInfo(tableInfo.getClass());
+            PropertyDescriptor[] propertyDescriptors = tableBeanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor pd : propertyDescriptors) {
+                Method readMethod = pd.getReadMethod();
+                objectMap.put(pd.getName(), readMethod.invoke(tableInfo, readMethod.getParameters()));
+            }
+        } catch (Exception e) {
+            logger.error("解析bean失败！", e);
         }
-        objectMap.put("restControllerStyle", config.getStrategyConfig().isRestControllerStyle());
-        objectMap.put("config", config);
-        objectMap.put("package", config.getPackageInfo());
-        GlobalConfig globalConfig = config.getGlobalConfig();
-        objectMap.put("author", globalConfig.getAuthor());
-        objectMap.put("idType", globalConfig.getIdType() == null ? null : globalConfig.getIdType().toString());
-        objectMap.put("logicDeleteFieldName", config.getStrategyConfig().getLogicDeleteFieldName());
-        objectMap.put("versionFieldName", config.getStrategyConfig().getVersionFieldName());
-        objectMap.put("activeRecord", globalConfig.isActiveRecord());
-        objectMap.put("kotlin", globalConfig.isKotlin());
-        objectMap.put("swagger2", globalConfig.isSwagger2());
-        objectMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        objectMap.put("table", tableInfo);
-        objectMap.put("enableCache", globalConfig.isEnableCache());
-        objectMap.put("baseResultMap", globalConfig.isBaseResultMap());
-        objectMap.put("baseColumnList", globalConfig.isBaseColumnList());
-        objectMap.put("entity", tableInfo.getEntityName());
-        objectMap.put("entitySerialVersionUID", config.getStrategyConfig().isEntitySerialVersionUID());
-        objectMap.put("entityColumnConstant", config.getStrategyConfig().isEntityColumnConstant());
-        objectMap.put("entityBuilderModel", config.getStrategyConfig().isEntityBuilderModel());
-        objectMap.put("entityLombokModel", config.getStrategyConfig().isEntityLombokModel());
-        objectMap.put("entityBooleanColumnRemoveIsPrefix", config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix());
-        objectMap.put("superEntityClass", getSuperClassName(config.getSuperEntityClass()));
-        objectMap.put("superMapperClassPackage", config.getSuperMapperClass());
-        objectMap.put("superMapperClass", getSuperClassName(config.getSuperMapperClass()));
-        objectMap.put("superServiceClassPackage", config.getSuperServiceClass());
-        objectMap.put("superServiceClass", getSuperClassName(config.getSuperServiceClass()));
-        objectMap.put("superServiceImplClassPackage", config.getSuperServiceImplClass());
-        objectMap.put("superServiceImplClass", getSuperClassName(config.getSuperServiceImplClass()));
-        objectMap.put("superControllerClassPackage", config.getSuperControllerClass());
-        objectMap.put("superControllerClass", getSuperClassName(config.getSuperControllerClass()));
         return objectMap;
     }
 
@@ -243,42 +161,5 @@ public abstract class AbstractVelocityTemplateEngine {
     public abstract String templateFilePath(String filePath);
 
 
-    /**
-     * 检测文件是否存在
-     *
-     * @return 文件是否存在
-     */
-    protected boolean isCreate(FileType fileType, String filePath) {
-        ConfigBuilder cb = getConfigBuilder();
-        // 自定义判断
-        InjectionConfig ic = cb.getInjectionConfig();
-        if (null != ic && null != ic.getFileCreate()) {
-            return ic.getFileCreate().isCreate(cb, fileType, filePath);
-        }
-        // 全局判断【默认】
-        File file = new File(filePath);
-        boolean exist = file.exists();
-        if (!exist) {
-            PackageHelper.mkDir(file.getParentFile());
-        }
-        return !exist || getConfigBuilder().getGlobalConfig().isFileOverride();
-    }
-
-    /**
-     * 文件后缀
-     */
-    protected String suffixJavaOrKt() {
-        return getConfigBuilder().getGlobalConfig().isKotlin() ? Constants.KT_SUFFIX : Constants.JAVA_SUFFIX;
-    }
-
-
-    public ConfigBuilder getConfigBuilder() {
-        return configBuilder;
-    }
-
-    public AbstractVelocityTemplateEngine setConfigBuilder(ConfigBuilder configBuilder) {
-        this.configBuilder = configBuilder;
-        return this;
-    }
 }
 

@@ -1,8 +1,6 @@
 package com.study.generator.context;
 
 import com.study.generator.config.CommentGeneratorConfiguration;
-import com.study.generator.config.FileOutConfig;
-import com.study.generator.config.TemplateConfig;
 import com.study.generator.jdbc.ObjectFactory;
 import com.study.generator.jdbc.config.*;
 import com.study.generator.jdbc.connection.ConnectionFactory;
@@ -255,8 +253,6 @@ public class Context extends PropertyHolder {
 
             }
         }
-
-
     }
 
 
@@ -349,13 +345,8 @@ public class Context extends PropertyHolder {
     }
 
 
-    public static TemplateConfig getTemplateConfig() {
-        return null;
-    }
 
-    public static List<FileOutConfig> getFileOutConfig() {
-        return null;
-    }
+
 
 
     public void setCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {

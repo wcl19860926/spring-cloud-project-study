@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 public class TemplateConfig {
 
 
-    @Getter(AccessLevel.NONE)
+   // @Getter(AccessLevel.NONE)
     private String entity = ConstVal.TEMPLATE_ENTITY_JAVA;
 
     private String entityKt = ConstVal.TEMPLATE_ENTITY_KT;
@@ -26,7 +26,4 @@ public class TemplateConfig {
 
     private String controller = ConstVal.TEMPLATE_CONTROLLER;
 
-    public String getEntity(boolean kotlin) {
-        return kotlin ? entityKt : entity;
-    }
 }

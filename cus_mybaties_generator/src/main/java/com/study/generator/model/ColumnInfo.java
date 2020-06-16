@@ -6,7 +6,11 @@ import lombok.Data;
 public class ColumnInfo {
 
 
-    private String javaType;
+    private  String JavaTypeFullName;
+
+    private String javaTypeShortName;
+
+    private String javaTypePackageName;
 
     private String jdbcType;
 

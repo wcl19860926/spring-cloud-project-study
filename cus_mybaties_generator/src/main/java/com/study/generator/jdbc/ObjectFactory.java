@@ -165,9 +165,9 @@ public class ObjectFactory {
 
         try {
             Class<?> clazz = internalClassForName(type);
-
-            answer = clazz.getConstructor().newInstance();
+            answer =  clazz.getConstructor().newInstance();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(getString(
                     "RuntimeError.6", type), e); //$NON-NLS-1$
 

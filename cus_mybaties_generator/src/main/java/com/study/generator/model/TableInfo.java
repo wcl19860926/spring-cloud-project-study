@@ -11,7 +11,7 @@ public class TableInfo {
     private String tableName;
 
 
-    private ColumnInfo keyColumn;
+    private List<ColumnInfo> keyColumns;
 
 
     private List<ColumnInfo> columns;
@@ -23,14 +23,11 @@ public class TableInfo {
 
     private String baseResultMapId;
 
+    private  String  xmlFileName;
 
-    private String  mapperPackage;
+    private  String  xmlFileNameSpace;
 
-    private String  mapperFileName;
-
-    private String  mapperNameSpace;
-
-    private  String  mapperJavaType;
+    private  String  javaMapperType;
 
 
 

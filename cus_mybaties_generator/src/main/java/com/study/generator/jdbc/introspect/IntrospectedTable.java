@@ -20,7 +20,8 @@ import static com.study.generator.util.StringUtility.stringHasValue;
  * @author Jeff Butler
  * 
  */
-public abstract class IntrospectedTable {
+public class  IntrospectedTable {
+
 
     public enum TargetRuntime {
         MYBATIS3,
@@ -45,7 +46,7 @@ public abstract class IntrospectedTable {
         ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_INSERT_STATEMENT_ID,
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
-        ATTR_SELECT_ALL_STATEMENT_ID,
+        ATTR_SELECT_LIST_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
@@ -71,7 +72,6 @@ public abstract class IntrospectedTable {
     protected FullyQualifiedTable fullyQualifiedTable;
 
     protected Context context;
-
 
 
     protected List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
@@ -129,7 +129,7 @@ public abstract class IntrospectedTable {
                 .filter(ic -> columnMatches(ic, columnName))
                 .findFirst();
     }
-    
+
     private boolean columnMatches(IntrospectedColumn introspectedColumn, String columnName) {
         if (introspectedColumn.isColumnNameDelimited()) {
             return introspectedColumn.getActualColumnName().equals(columnName);
@@ -141,7 +141,7 @@ public abstract class IntrospectedTable {
     /**
      * Returns true if any of the columns in the table are JDBC Dates (as
      * opposed to timestamps).
-     * 
+     *
      * @return true if the table contains DATE columns
      */
     public boolean hasJDBCDateColumns() {
@@ -153,7 +153,7 @@ public abstract class IntrospectedTable {
     /**
      * Returns true if any of the columns in the table are JDBC Times (as
      * opposed to timestamps).
-     * 
+     *
      * @return true if the table contains TIME columns
      */
     public boolean hasJDBCTimeColumns() {
@@ -166,7 +166,7 @@ public abstract class IntrospectedTable {
      * Returns the columns in the primary key. If the generatePrimaryKeyClass()
      * method returns false, then these columns will be iterated as the
      * parameters of the selectByPrimaryKay and deleteByPrimaryKey methods
-     * 
+     *
      * @return a List of ColumnDefinition objects for columns in the primary key
      */
     public List<IntrospectedColumn> getPrimaryKeyColumns() {
@@ -227,7 +227,6 @@ public abstract class IntrospectedTable {
     }
 
 
-
     public String getTableConfigurationProperty(String property) {
         return tableConfiguration.getProperty(property);
     }
@@ -236,7 +235,28 @@ public abstract class IntrospectedTable {
         return internalAttributes.get(InternalAttribute.ATTR_PRIMARY_KEY_TYPE);
     }
 
+    /**
+     * Gets the base record type.
+     *
+     * @return the type for the record (the class that holds non-primary key and non-BLOB fields). Note that the value
+     *         will be calculated regardless of whether the table has these columns or not.
+     */
+    public String getBaseRecordType() {
+        return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);
+    }
 
+    public String getKotlinRecordType() {
+        return internalAttributes.get(InternalAttribute.ATTR_KOTLIN_RECORD_TYPE);
+    }
+
+    /**
+     * Gets the example type.
+     *
+     * @return the type for the example class.
+     */
+    public String getExampleType() {
+        return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_TYPE);
+    }
 
     /**
      * Gets the record with blo bs type.
@@ -334,7 +354,6 @@ public abstract class IntrospectedTable {
         calculateModelAttributes();
         calculateXmlAttributes();
 
-
     }
 
     protected void calculateXmlAttributes() {
@@ -351,7 +370,7 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
-        setSelectAllStatementId("selectList"); //$NON-NLS-1$
+        setSelectListStatementId("selectList"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
         setSelectByPrimaryKeyStatementId("selectByPrimaryKey"); //$NON-NLS-1$
@@ -445,9 +464,9 @@ public abstract class IntrospectedTable {
                         s);
     }
 
-    public void setSelectAllStatementId(String s) {
+    public void setSelectListStatementId(String s) {
         internalAttributes.put(
-                InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID, s);
+                InternalAttribute.ATTR_SELECT_LIST_STATEMENT_ID, s);
     }
 
     public void setSelectByExampleStatementId(String s) {
@@ -549,9 +568,9 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
     }
 
-    public String getSelectAllStatementId() {
+    public String getSelectListStatementId() {
         return internalAttributes
-                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);
+                .get(InternalAttribute.ATTR_SELECT_LIST_STATEMENT_ID);
     }
 
     public String getSelectByExampleStatementId() {
@@ -637,7 +656,7 @@ public abstract class IntrospectedTable {
             sb.append("SqlProvider"); //$NON-NLS-1$
         }
         setMyBatis3SqlProviderType(sb.toString());
-        
+
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
@@ -699,7 +718,7 @@ public abstract class IntrospectedTable {
     /**
      * If property exampleTargetPackage specified for example use the specified value, else
      * use default value (targetPackage).
-     * 
+     *
      * @return the calculated package
      */
     protected String calculateJavaModelExamplePackage() {
@@ -708,7 +727,7 @@ public abstract class IntrospectedTable {
         if (!stringHasValue(exampleTargetPackage)) {
             return calculateJavaModelPackage();
         }
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append(exampleTargetPackage);
         sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));
@@ -719,7 +738,7 @@ public abstract class IntrospectedTable {
         StringBuilder sb = new StringBuilder();
         SqlMapGeneratorConfiguration config = context
                 .getSqlMapGeneratorConfiguration();
-        
+
         // config can be null if the Java client does not require XML
         if (config != null) {
             sb.append(config.getTargetPackage());
@@ -786,6 +805,7 @@ public abstract class IntrospectedTable {
         return internalAttributes
                 .get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);
     }
+
 
 
 
@@ -883,19 +903,19 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
                 mybatis3SqlProviderType);
     }
-    
+
     public String getMyBatisDynamicSqlSupportType() {
         return internalAttributes.get(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE);
     }
-    
+
     public void setMyBatisDynamicSqlSupportType(String s) {
         internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);
     }
-    
+
     public TargetRuntime getTargetRuntime() {
         return targetRuntime;
     }
-    
+
     public boolean isImmutable() {
         Properties properties;
 
@@ -923,8 +943,6 @@ public abstract class IntrospectedTable {
 
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
-
-
     public Context getContext() {
         return context;
     }
@@ -944,4 +962,31 @@ public abstract class IntrospectedTable {
     public void setTableType(String tableType) {
         this.tableType = tableType;
     }
+
+
+    public String getJavaProject() {
+        return context.getJavaClientGeneratorConfiguration().getTargetProject();
+    }
+
+    public String getJavaPackage() {
+        return context.getJavaClientGeneratorConfiguration().getTargetPackage();
+    }
+
+    public String getEntityProject() {
+        return context.getJavaModelGeneratorConfiguration().getTargetProject();
+    }
+
+    public String getEntityPackage() {
+        return context.getJavaModelGeneratorConfiguration().getTargetPackage();
+    }
+
+
+    public String getXmlProject() {
+        return context.getSqlMapGeneratorConfiguration().getTargetProject();
+    }
+
+    public String getXmlPackage() {
+        return context.getSqlMapGeneratorConfiguration().getTargetPackage();
+    }
+
 }

@@ -32,7 +32,7 @@
         targetProject 的写法：
            1. 相对路径： src/main/java
         -->
-        <javaModelGenerator targetPackage="com.study.user.entity.sys"
+        <javaModelGenerator targetPackage="com.study11.user.entity.sys"
                             targetProject="../user-service/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -44,11 +44,11 @@
            2. 相对路径: ${basedir}/../xxx/src/main/resources/mapper
            3. 绝对路径：/Users/Charles/workspace/app-oms/src/resources/mapper
         -->
-        <sqlMapGenerator targetPackage="xml.sys"
+        <sqlMapGenerator targetPackage="xml.sys11"
                          targetProject="../user-service/src/main/resources/mapper">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.user.mapper.sys"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study11.user.mapper.sys"
                              targetProject="../user-service/src/main/java/">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
