@@ -83,6 +83,27 @@ public class StringUtils {
         return null;
     }
 
+    public static String replaceSqlPattern(String str) {
+        if (str != null && str.length() != 0) {
+            str = str.replaceAll("\\\\", "\\\\\\\\");
+            str = str.replaceAll("_", "\\\\_");
+            str = str.replaceAll("%", "\\\\%");
+            return str.trim();
+        } else {
+            return str;
+        }
+    }
+
+    public static boolean isNumber(String str) {
+        if (str != null && str.length() != 0) {
+            Pattern pattern = Pattern.compile("-?[0-9]*");
+            Matcher isNum = pattern.matcher(str);
+            return isNum.matches();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 判断字符串是否为空
      *

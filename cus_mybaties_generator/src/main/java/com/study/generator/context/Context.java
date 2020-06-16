@@ -1,6 +1,7 @@
 package com.study.generator.context;
 
 import com.study.generator.config.CommentGeneratorConfiguration;
+import com.study.generator.gen.FileGeneratorHelper;
 import com.study.generator.jdbc.ObjectFactory;
 import com.study.generator.jdbc.config.*;
 import com.study.generator.jdbc.connection.ConnectionFactory;
@@ -8,6 +9,9 @@ import com.study.generator.jdbc.connection.JDBCConnectionFactory;
 import com.study.generator.jdbc.db.DatabaseIntrospector;
 import com.study.generator.jdbc.introspect.IntrospectedTable;
 import com.study.generator.jdbc.java.JavaTypeResolver;
+import com.study.generator.model.TableInfo;
+import com.study.generator.velocity.AbstractTemplateEngine;
+import com.study.generator.velocity.VelocityTemplateEngine;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -52,6 +56,8 @@ public class Context extends PropertyHolder {
 
     private Boolean autoDelimitKeywords;
 
+    private AbstractTemplateEngine abstractTemplateEngine;
+
 
     private boolean isJava8Targeted = true;
 
@@ -59,6 +65,7 @@ public class Context extends PropertyHolder {
         super();
         tableConfigurations = new ArrayList<>();
         pluginConfigurations = new ArrayList<>();
+        abstractTemplateEngine = new VelocityTemplateEngine();
     }
 
     public void addTableConfiguration(TableConfiguration tc) {
@@ -182,7 +189,6 @@ public class Context extends PropertyHolder {
         this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;
     }
 
-
     public List<TableConfiguration> getTableConfigurations() {
         return tableConfigurations;
     }
@@ -213,10 +219,6 @@ public class Context extends PropertyHolder {
     }
 
 
-    public String getTargetRuntime() {
-        return targetRuntime;
-    }
-
     public void setTargetRuntime(String targetRuntime) {
         this.targetRuntime = targetRuntime;
     }
@@ -229,29 +231,19 @@ public class Context extends PropertyHolder {
         this.introspectedColumnImpl = introspectedColumnImpl;
     }
 
-
     private List<IntrospectedTable> introspectedTables;
-
-    public int getIntrospectionSteps() {
-        int steps = 0;
-        steps++; // connect to database
-        steps += tableConfigurations.size() * 1;
-
-        return steps;
-    }
 
 
     public void generateFiles(
             List<String> warnings)
             throws InterruptedException {
         if (introspectedTables != null) {
+            List<TableInfo> tableInfoList = new ArrayList<>();
             for (IntrospectedTable introspectedTable : introspectedTables) {
                 introspectedTable.initialize();
-
-                System.out.println(introspectedTable);
-
-
+                tableInfoList.add(FileGeneratorHelper.transferToTableInfo(introspectedTable));
             }
+            abstractTemplateEngine.batchOutput(tableInfoList);
         }
     }
 
@@ -269,13 +261,6 @@ public class Context extends PropertyHolder {
         this.connectionFactoryConfiguration = connectionFactoryConfiguration;
     }
 
-    public boolean isJava8Targeted() {
-        return isJava8Targeted;
-    }
-
-    public void setJava8Targeted(boolean isJava8Targeted) {
-        this.isJava8Targeted = isJava8Targeted;
-    }
 
     public void introspectTables(
             List<String> warnings, Set<String> fullyQualifiedTableNames)
@@ -343,10 +328,6 @@ public class Context extends PropertyHolder {
             }
         }
     }
-
-
-
-
 
 
     public void setCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {

@@ -66,11 +66,6 @@ public class FileGeneratorHelper {
     }
 
 
-    public static void generator(TableInfo tableInfoList) {
-
-
-    }
-
 
     private void writeGeneratedJavaFile(List<String> warnings)
             throws InterruptedException, IOException {
@@ -90,14 +85,7 @@ public class FileGeneratorHelper {
     }
 
 
-    /**
-     * Writes, or overwrites, the contents of the specified file.
-     *
-     * @param file         the file
-     * @param content      the content
-     * @param fileEncoding the file encoding
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
+
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
         FileOutputStream fos = new FileOutputStream(file, false);
         OutputStreamWriter osw;
@@ -112,13 +100,7 @@ public class FileGeneratorHelper {
         }
     }
 
-    /**
-     * Gets the unique file name.
-     *
-     * @param directory the directory
-     * @param fileName  the file name
-     * @return the unique file name
-     */
+
     private File getUniqueFileName(File directory, String fileName) {
         File answer = null;
 

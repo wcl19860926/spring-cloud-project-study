@@ -1,9 +1,10 @@
-package com.study.generator.gen;
+package com.study.generator;
 
 import com.study.generator.config.Configuration;
 import com.study.generator.config.xml.ConfigurationParser;
 import com.study.generator.exception.InvalidConfigurationException;
 import com.study.generator.exception.XMLParserException;
+import com.study.generator.gen.CusAutoGenerator;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;

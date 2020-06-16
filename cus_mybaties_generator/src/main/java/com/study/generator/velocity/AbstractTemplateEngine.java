@@ -1,11 +1,11 @@
 package com.study.generator.velocity;
 
 
-import com.study.generator.constants.Constants;
+import com.study.generator.config.TemplateConfig;
 import com.study.generator.constants.StringPool;
-import com.study.generator.enums.FileType;
 import com.study.generator.model.TableInfo;
 import com.study.generator.util.StringUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,39 +13,49 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
-
 import java.lang.reflect.Method;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractVelocityTemplateEngine {
+import static com.study.generator.constants.Constants.JAVA_SUFFIX;
+
+public abstract class AbstractTemplateEngine {
 
 
-    private List<TableInfo> tableInfoList;
+    /**
+     * The Unix separator character.
+     */
+    private static final char UNIX_SEPARATOR = '/';
 
-    protected static final Logger logger = LoggerFactory.getLogger(AbstractVelocityTemplateEngine.class);
+    /**
+     * The Windows separator character.
+     */
+    private static final char WINDOWS_SEPARATOR = '\\';
+
+    protected static final Logger logger = LoggerFactory.getLogger(AbstractTemplateEngine.class);
 
 
-    public AbstractVelocityTemplateEngine(List<TableInfo> tableInfoList) {
-        this.tableInfoList = tableInfoList;
+    public AbstractTemplateEngine() {
+
     }
 
     /*
      * 输出 java xml 文件
      */
-    public AbstractVelocityTemplateEngine batchOutput() {
+    public AbstractTemplateEngine batchOutput(List<TableInfo> tableInfoList) {
         try {
             for (TableInfo tableInfo : tableInfoList) {
                 Map<String, Object> objectMap = getObjectMap(tableInfo);
                 // Mp.java
-               /* String entityName = tableInfo.getEntityName();
-                if (null != entityName && null != pathInfo.get(Constants.ENTITY_PATH)) {
-                    String entityFile = String.format((pathInfo.get(Constants.ENTITY_PATH) + File.separator + "%s" + suffixJavaOrKt()), entityName);
-                    if (isCreate(FileType.ENTITY, entityFile)) {
-                        writer(objectMap, templateFilePath(template.getEntity(getConfigBuilder().getGlobalConfig().isKotlin())), entityFile);
-                    }
-                }*/
+                String entityName = tableInfo.getDomainName();
+
+                String entityFile = String.format(getGeneratePath(tableInfo.getJavaEntityTargetProject(), tableInfo.getJavaEntityPackage()).getAbsolutePath() + File.separator + "%s" + JAVA_SUFFIX, entityName);
+                writer(objectMap, templateFilePath(TemplateConfig.entity), entityFile);
+
+
                 // MpMapper.java
                 /*if (null != tableInfo.getMapperName() && null != pathInfo.get(Constants.MAPPER_PATH)) {
                     String mapperFile = String.format((pathInfo.get(Constants.MAPPER_PATH) + File.separator + tableInfo.getMapperName() + suffixJavaOrKt()), entityName);
@@ -89,6 +99,26 @@ public abstract class AbstractVelocityTemplateEngine {
     }
 
 
+
+
+
+
+
+
+
+    private File getGeneratePath(String targetProject, String packagePath) {
+        Path curPath = Paths.get(".");
+        packagePath  = packagePathToFilePath(packagePath);
+        Path targetPath = Paths.get(targetProject, packagePath);
+        String path = curPath.resolve(targetPath).toAbsolutePath().toString();
+        path = FilenameUtils.normalize(path);
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file;
+    }
+
     /**
      * 将模板转化成为文件
      *
@@ -98,22 +128,17 @@ public abstract class AbstractVelocityTemplateEngine {
      */
     public abstract void writer(Map<String, Object> objectMap, String templatePath, String outputFile) throws Exception;
 
-    /**
-     * 处理输出目录
-     */
-    protected void mkdirs(String path) {
-        File dir = new File(path);
-        if (!dir.exists()) {
-            boolean result = dir.mkdirs();
-            if (result) {
-                logger.debug("创建目录： [" + path + "]");
-            }
+
+
+
+
+    private  String  packagePathToFilePath(String packagePath){
+        if(packagePath==null || StringUtils.isEmpty(packagePath)){
+            return  "";
         }
+       return   StringUtils.join(File.separatorChar +"" , packagePath.split("\\."));
+
     }
-
-
-
-
 
     /**
      * 渲染对象 MAP 信息

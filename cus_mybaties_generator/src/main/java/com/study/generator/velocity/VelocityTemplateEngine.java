@@ -1,10 +1,9 @@
 package com.study.generator.velocity;
 
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
+
 import com.study.generator.constants.Constants;
-import com.study.generator.model.TableInfo;
+import com.study.generator.constants.StringPool;
+import com.study.generator.util.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -13,21 +12,21 @@ import org.apache.velocity.app.VelocityEngine;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class VelocityTemplateEngine extends AbstractVelocityTemplateEngine {
+public class VelocityTemplateEngine extends AbstractTemplateEngine {
 
     private static final String DOT_VM = ".vm";
     private VelocityEngine velocityEngine;
 
-    public VelocityTemplateEngine(List<TableInfo> tableInfoList) {
-        super(tableInfoList);
+    public VelocityTemplateEngine() {
+        super();
+        init();
     }
 
 
-    public VelocityTemplateEngine init(ConfigBuilder configBuilder) {
+    public VelocityTemplateEngine init() {
 
         if (null == velocityEngine) {
             Properties p = new Properties();
@@ -52,6 +51,7 @@ public class VelocityTemplateEngine extends AbstractVelocityTemplateEngine {
              OutputStreamWriter ow = new OutputStreamWriter(fos, Constants.UTF8);
              BufferedWriter writer = new BufferedWriter(ow)) {
             template.merge(new VelocityContext(objectMap), writer);
+
         }
         logger.debug("模板:" + templatePath + ";  文件:" + outputFile);
     }

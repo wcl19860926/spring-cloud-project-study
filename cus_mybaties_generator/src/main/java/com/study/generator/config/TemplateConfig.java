@@ -1,9 +1,8 @@
 package com.study.generator.config;
 
-import com.baomidou.mybatisplus.generator.config.ConstVal;
-import lombok.AccessLevel;
+
+import com.study.generator.constants.Constants;
 import lombok.Data;
-import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Data
@@ -11,19 +10,18 @@ import lombok.experimental.Accessors;
 public class TemplateConfig {
 
 
-   // @Getter(AccessLevel.NONE)
-    private String entity = ConstVal.TEMPLATE_ENTITY_JAVA;
+    // @Getter(AccessLevel.NONE)
+    public static String entity = Constants.TEMPLATE_ENTITY_JAVA;
 
-    private String entityKt = ConstVal.TEMPLATE_ENTITY_KT;
 
-    private String service = ConstVal.TEMPLATE_SERVICE;
+    public static String service = Constants.TEMPLATE_SERVICE;
 
-    private String serviceImpl = ConstVal.TEMPLATE_SERVICE_IMPL;
+    public static String serviceImpl = Constants.TEMPLATE_SERVICE_IMPL;
 
-    private String mapper = ConstVal.TEMPLATE_MAPPER;
+    public static String mapper = Constants.TEMPLATE_MAPPER;
 
-    private String xml = ConstVal.TEMPLATE_XML;
+    public static String xml = Constants.TEMPLATE_XML;
 
-    private String controller = ConstVal.TEMPLATE_CONTROLLER;
+    public static String controller = Constants.TEMPLATE_CONTROLLER;
 
 }

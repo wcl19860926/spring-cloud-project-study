@@ -6,10 +6,7 @@ import com.study.generator.function.BiIntFunction;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -249,7 +246,7 @@ public class StringUtils {
      * @param args    填充参数
      */
     public static String sqlArgsFill(String content, Object... args) {
-        if (com.baomidou.mybatisplus.core.toolkit.StringUtils.isNotEmpty(content) && ArrayUtils.isNotEmpty(args)) {
+        if (StringUtils.isNotEmpty(content) && ArrayUtils.isNotEmpty(args)) {
             // 索引不能使用，因为 SQL 中的占位符数字与索引不相同
             return replace(content, MP_SQL_PLACE_HOLDER, (m, i) -> sqlParam(args[Integer.parseInt(m.group("idx"))])).toString();
         }
@@ -294,9 +291,9 @@ public class StringUtils {
     public static String sqlParam(Object obj) {
         String repStr;
         if (obj instanceof Collection) {
-            repStr = com.baomidou.mybatisplus.core.toolkit.StringUtils.quotaMarkList((Collection<?>) obj);
+            repStr = StringUtils.quotaMarkList((Collection<?>) obj);
         } else {
-            repStr = com.baomidou.mybatisplus.core.toolkit.StringUtils.quotaMark(obj);
+            repStr = StringUtils.quotaMark(obj);
         }
         return repStr;
     }
@@ -323,7 +320,7 @@ public class StringUtils {
      * @return 单引号包含的原字符串的集合形式
      */
     public static String quotaMarkList(Collection<?> coll) {
-        return coll.stream().map(com.baomidou.mybatisplus.core.toolkit.StringUtils::quotaMark)
+        return coll.stream().map(StringUtils::quotaMark)
                 .collect(joining(StringPool.COMMA, StringPool.LEFT_BRACKET, StringPool.RIGHT_BRACKET));
     }
 
@@ -798,5 +795,15 @@ public class StringUtils {
     public static String removeWordWithComma(String s, String p) {
         String match = "\\s*" + p + "\\s*,{0,1}";
         return s.replaceAll(match, "");
+    }
+
+
+    public static String join(String separator, String... args) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Arrays.stream(args).forEach((s) -> {
+            stringBuilder.append(s);
+            stringBuilder.append(separator);
+        });
+        return stringBuilder.toString();
     }
 }
