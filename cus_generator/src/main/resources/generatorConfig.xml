@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "mybatis-generator-config_1_0.dtd">
+<!-- http://mybatis.org/dtd/ -->
+<generatorConfiguration>
+
+    <context id="Mysql" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="false"/>
+            <property name="addRemarkComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost/boo-shiro?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;serverTimezone=GMT-8"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+
+        <javaModelGenerator targetPackage="com.study.user.entity.sys"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="superEntity" value="com.study.common.core.mybaties.entity.BaseEntity"/>
+        </javaModelGenerator>
+
+
+        <sqlMapGenerator targetPackage="xml.sys"
+                         targetProject="src/main/resources/mapper">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.user.mapper.sys"
+                             targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="superMapper" value="com.study.common.core.mybaties.mapper.BaseMapper"/>
+            <property name="servicePackage" value="com.study.user.service.sys" />
+            <property name="controllerPackage" value="com.study.user.controller.sys" />
+            <property name="baseService" value="com.study.common.core.mybaties.service.BaseService"/>
+            <property name="baseServiceImpl" value="com.study.common.core.mybaties.service.impl.BaseServiceImpl"/>
+            <property name="baseController" value="com.study.common.core.web.controller.BaseController"/>
+        </javaClientGenerator>
+
+        <!-- <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
+           <property name="useActualColumnNames" value="true"/>
+           <generatedKey column="ID" sqlStatement="DB2" identity="true" />
+           <columnOverride column="DATE_FIELD" property="startDate" />
+           <ignoreColumn column="FRED" />
+           <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+       </table>-->
+
+        <!--
+         columnOverride：字段 LONG_VARCHAR_FIELD 将被当成 VARCHAR 类型, 忽略该字段的真实类型.
+         ignoreColumn  ：字段FRED  将被忽略
+         generatedKey  ： 它是主建列，数据库类型是DB2。这将导致MBG在生成的语句中生成正确的元素，以便可以返回新生成的键(使用特定于DB2的SQL)。
+        -->
+
+
+        <table schema="boo-shiro" tableName="sys_user" domainObjectName="SysUser">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_role" domainObjectName="SsyRole">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_role_user" domainObjectName="SysRoleUser">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_permission" domainObjectName="SysPermission">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="boo-shiro" tableName="sys_permission_role" domainObjectName="SysPermissionRole">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>

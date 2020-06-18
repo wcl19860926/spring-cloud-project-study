@@ -69,6 +69,84 @@
             <artifactId>common-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
+
+
+    </dependencies>
+    <build>
+        <!--specify jar/war name-->
+        <finalName>study-user-service-${version-suffix}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <!--设置包含的测试类 -->
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>-XX:-UseSplitVerifier</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+
+     <!--   <filters>  指定使用的 filter
+            <filter>src/main/filters/${env}.properties</filter>
+        </filters>-->
+        <resources>
+            <resource> <!-- 配置需要被替换的资源文件路径, properties 应该在 src/main/resource 目录下 -->
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>static/**</exclude>
+                    <exclude>ftl/**</exclude>
+                </excludes>
+                <filtering>true</filtering> <!-- 是否使用过滤器 -->
+            </resource>
+        </resources>
+
+
+    </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <packageType>jar</packageType>
+                <activedProfile>dev</activedProfile>
+                <version-suffix>SNAPSHOT</version-suffix>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>integration</id>
+            <properties>
+                <packageType>war</packageType>
+                <activedProfile>test</activedProfile>
+                <version-suffix>SNAPSHOT</version-suffix>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+    </profiles>
 </project>

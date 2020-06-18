@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface BaseMapper<T extends BaseEntity, PK extends Serializable> {
 
-    Integer insert(T entity);
+    T insert(T entity);
 
     Integer deleteByPrimaryKey(PK id);
 
