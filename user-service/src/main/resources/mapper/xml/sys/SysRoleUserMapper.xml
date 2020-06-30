@@ -5,8 +5,8 @@
 
     <resultMap id="BaseResultMap" type="com.study.user.entity.sys.SysRoleUser">
             <id column="id" jdbcType="VARCHAR" property="id"/>
-            <result column="userId" jdbcType="INTEGER" property="userId"/>
-            <result column="roleId" jdbcType="INTEGER" property="roleId"/>
+            <result column="userId" jdbcType="VARCHAR" property="userId"/>
+            <result column="roleId" jdbcType="VARCHAR" property="roleId"/>
     </resultMap>
 
 
@@ -19,8 +19,8 @@
            (id, userId, roleId)
         values (
             #{id,jdbcType=VARCHAR},
-              #{roleId,jdbcType=INTEGER},
-              #{roleId,jdbcType=INTEGER}
+              #{roleId,jdbcType=VARCHAR},
+              #{roleId,jdbcType=VARCHAR}
     </insert>
 
 
@@ -42,10 +42,10 @@
                     #{id,jdbcType=VARCHAR},
                 </if>
                 <if test="userId != null">
-                    #{userId,jdbcType=INTEGER},
+                    #{userId,jdbcType=VARCHAR},
                 </if>
                 <if test="roleId != null">
-                    #{roleId,jdbcType=INTEGER},
+                    #{roleId,jdbcType=VARCHAR},
                 </if>
         </trim>
     </insert>
@@ -54,8 +54,8 @@
 
         update sys_role_user
         set
-            userId =  #{userId,jdbcType=INTEGER}
-            roleId =  #{roleId,jdbcType=INTEGER},
+            userId =  #{userId,jdbcType=VARCHAR}
+            roleId =  #{roleId,jdbcType=VARCHAR},
         where
             id =  #{id,jdbcType=VARCHAR}
     </update>
@@ -66,10 +66,10 @@
         update  sys_role_user
         <set>
                 <if test="userId != null">
-                    userId = #{userId,jdbcType=INTEGER},
+                    userId = #{userId,jdbcType=VARCHAR},
                 </if>
                 <if test="roleId != null">
-                    roleId = #{roleId,jdbcType=INTEGER},
+                    roleId = #{roleId,jdbcType=VARCHAR},
                 </if>
         </set>
         where
@@ -100,10 +100,10 @@
             and    id =  #{id,jdbcType=VARCHAR}
            </if>
            <if test="userId != null">
-            and    userId =  #{userId,jdbcType=INTEGER}
+            and    userId =  #{userId,jdbcType=VARCHAR}
            </if>
            <if test="roleId != null">
-            and    roleId =  #{roleId,jdbcType=INTEGER}
+            and    roleId =  #{roleId,jdbcType=VARCHAR}
            </if>
         </where>
     </select>

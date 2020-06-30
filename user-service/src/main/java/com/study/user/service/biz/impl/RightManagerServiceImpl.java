@@ -1,10 +1,7 @@
 package com.study.user.service.biz.impl;
 
 import com.study.common.util.EntityUtils;
-import com.study.user.entity.sys.SysPermission;
-import com.study.user.entity.sys.SysPermissionRole;
-import com.study.user.entity.sys.SysRole;
-import com.study.user.entity.sys.SysRoleUser;
+import com.study.user.entity.sys.*;
 import com.study.user.service.biz.RightManagerService;
 import com.study.user.service.sys.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service("rightManagerService")
@@ -46,7 +42,7 @@ public class RightManagerServiceImpl implements RightManagerService {
     public List<SysRole> findRolesByUserId(String userId) {
         List<SysRoleUser> sysRoleUserList = sysRoleUserService.findByUserId(userId);
         if (!CollectionUtils.isEmpty(sysRoleUserList)) {
-            List<Integer> roleIds = EntityUtils.applyProperty(sysRoleUserList, SysRoleUser::getRoleId);
+            List<String> roleIds = EntityUtils.applyProperty(sysRoleUserList, SysRoleUser::getRoleId);
             return sysRoleService.queryByRoleIds(roleIds);
         }
         return new ArrayList<>();
@@ -59,10 +55,10 @@ public class RightManagerServiceImpl implements RightManagerService {
      * @return
      */
     @Override
-    public List<SysPermission> findPermissionsByRoleId(Integer roleId) {
+    public List<SysPermission> findPermissionsByRoleId(String roleId) {
         List<SysPermissionRole> sysPermissionRoleList = sysPermissionRoleService.findByRoleId(roleId);
         if (!CollectionUtils.isEmpty(sysPermissionRoleList)) {
-            List<Integer> permissionIds = EntityUtils.applyProperty(sysPermissionRoleList, SysPermissionRole::getPermissionId);
+            List<String> permissionIds = EntityUtils.applyProperty(sysPermissionRoleList, SysPermissionRole::getPermissionId);
             return sysPermissionService.queryByPermissionIds(permissionIds);
         }
         return new ArrayList<>();
@@ -75,10 +71,10 @@ public class RightManagerServiceImpl implements RightManagerService {
      * @return
      */
     @Override
-    public List<SysPermission> findPermissionsByRoleIds(List<Integer> roleIds) {
+    public List<SysPermission> findPermissionsByRoleIds(List<String> roleIds) {
         List<SysPermissionRole> sysPermissionRoleList = sysPermissionRoleService.findByRoleIds(roleIds);
         if (!CollectionUtils.isEmpty(sysPermissionRoleList)) {
-            List<Integer> permissionIds = EntityUtils.applyProperty(sysPermissionRoleList, SysPermissionRole::getPermissionId);
+            List<String> permissionIds = EntityUtils.applyProperty(sysPermissionRoleList, SysPermissionRole::getPermissionId);
             return sysPermissionService.queryByPermissionIds(permissionIds);
         }
         return new ArrayList<>();
@@ -94,8 +90,19 @@ public class RightManagerServiceImpl implements RightManagerService {
     public List<SysPermission> findPermissionsByUserId(String userId) {
         List<SysRole> sysRoles = this.findRolesByUserId(userId);
         if (CollectionUtils.isEmpty(sysRoles)) {
-            List<Integer>  roleIds  = EntityUtils.applyProperty(sysRoles , SysRole::getId)
+            List<String> roleIds = EntityUtils.applyProperty(sysRoles, SysRole::getId);
+            return findPermissionsByRoleIds(roleIds);
         }
-        return  new ArrayList<>();
+        return new ArrayList<>();
+    }
+
+    /**
+     * 通userCode 查询用户信息
+     * @param userCode
+     * @return
+     */
+    @Override
+    public SysUser findSysUserByUserCode(String userCode) {
+        return null;
     }
 }

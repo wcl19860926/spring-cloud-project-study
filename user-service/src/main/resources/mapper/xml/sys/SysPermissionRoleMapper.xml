@@ -5,8 +5,8 @@
 
     <resultMap id="BaseResultMap" type="com.study.user.entity.sys.SysPermissionRole">
             <id column="id" jdbcType="VARCHAR" property="id"/>
-            <result column="roleId" jdbcType="INTEGER" property="roleId"/>
-            <result column="permissionId" jdbcType="INTEGER" property="permissionId"/>
+            <result column="roleId" jdbcType="VARCHAR" property="roleId"/>
+            <result column="permissionId" jdbcType="VARCHAR" property="permissionId"/>
     </resultMap>
 
 
@@ -19,8 +19,8 @@
            (id, roleId, permissionId)
         values (
             #{id,jdbcType=VARCHAR},
-              #{permissionId,jdbcType=INTEGER},
-              #{permissionId,jdbcType=INTEGER}
+              #{permissionId,jdbcType=VARCHAR},
+              #{permissionId,jdbcType=VARCHAR}
     </insert>
 
 
@@ -42,10 +42,10 @@
                     #{id,jdbcType=VARCHAR},
                 </if>
                 <if test="roleId != null">
-                    #{roleId,jdbcType=INTEGER},
+                    #{roleId,jdbcType=VARCHAR},
                 </if>
                 <if test="permissionId != null">
-                    #{permissionId,jdbcType=INTEGER},
+                    #{permissionId,jdbcType=VARCHAR},
                 </if>
         </trim>
     </insert>
@@ -54,8 +54,8 @@
 
         update sys_permission_role
         set
-            roleId =  #{roleId,jdbcType=INTEGER}
-            permissionId =  #{permissionId,jdbcType=INTEGER},
+            roleId =  #{roleId,jdbcType=VARCHAR}
+            permissionId =  #{permissionId,jdbcType=VARCHAR},
         where
             id =  #{id,jdbcType=VARCHAR}
     </update>
@@ -66,10 +66,10 @@
         update  sys_permission_role
         <set>
                 <if test="roleId != null">
-                    roleId = #{roleId,jdbcType=INTEGER},
+                    roleId = #{roleId,jdbcType=VARCHAR},
                 </if>
                 <if test="permissionId != null">
-                    permissionId = #{permissionId,jdbcType=INTEGER},
+                    permissionId = #{permissionId,jdbcType=VARCHAR},
                 </if>
         </set>
         where
@@ -100,10 +100,10 @@
             and    id =  #{id,jdbcType=VARCHAR}
            </if>
            <if test="roleId != null">
-            and    roleId =  #{roleId,jdbcType=INTEGER}
+            and    roleId =  #{roleId,jdbcType=VARCHAR}
            </if>
            <if test="permissionId != null">
-            and    permissionId =  #{permissionId,jdbcType=INTEGER}
+            and    permissionId =  #{permissionId,jdbcType=VARCHAR}
            </if>
             <if test="roleIds != null and !roleIds.isEmpty()">
                 and  roleId in

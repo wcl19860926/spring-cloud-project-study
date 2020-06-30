@@ -23,7 +23,7 @@ public interface SysPermissionService  extends   BaseService<SysPermission , Str
      * @param permissionIds
      * @return   List<SysRole>
      */
-    List<SysPermission> queryByPermissionIds(List<Integer> permissionIds);
+    List<SysPermission> queryByPermissionIds(List<String> permissionIds);
 
 }
 

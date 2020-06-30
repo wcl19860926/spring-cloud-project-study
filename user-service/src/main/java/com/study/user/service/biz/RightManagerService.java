@@ -3,6 +3,7 @@ package com.study.user.service.biz;
 
 import com.study.user.entity.sys.SysPermission;
 import com.study.user.entity.sys.SysRole;
+import com.study.user.entity.sys.SysUser;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface RightManagerService {
      * @param roleId
      * @return
      */
-    List<SysPermission>  findPermissionsByRoleId(Integer roleId);
+    List<SysPermission>  findPermissionsByRoleId(String roleId);
 
 
 
@@ -31,7 +32,7 @@ public interface RightManagerService {
      * @param roleIds
      * @return
      */
-    List<SysPermission>  findPermissionsByRoleIds(List<Integer> roleIds);
+    List<SysPermission>  findPermissionsByRoleIds(List<String> roleIds);
 
 
     /**
@@ -40,4 +41,12 @@ public interface RightManagerService {
      * @return
      */
     List<SysPermission>  findPermissionsByUserId(String userId);
+
+
+    /**
+     * 通userCode 查询用户信息
+     * @param userCode
+     * @return
+     */
+    SysUser    findSysUserByUserCode(String  userCode);
 }

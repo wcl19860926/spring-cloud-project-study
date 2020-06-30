@@ -39,7 +39,7 @@ public class SysPermissionRoleServiceImpl extends BaseServiceImpl<SysPermissionR
      * @return
      */
     @Override
-    public List<SysPermissionRole> findByRoleId(Integer roleId) {
+    public List<SysPermissionRole> findByRoleId(String roleId) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("roleId", roleId);
         return selectList(paramsMap);
@@ -53,7 +53,7 @@ public class SysPermissionRoleServiceImpl extends BaseServiceImpl<SysPermissionR
      */
 
     @Override
-    public List<SysPermissionRole> findByRoleIds(List<Integer> roleIds) {
+    public List<SysPermissionRole> findByRoleIds(List<String> roleIds) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("roleIds", roleIds);
         return selectList(paramsMap);

@@ -41,7 +41,7 @@ public class SsyRoleServiceImpl extends BaseServiceImpl<SysRole, String> impleme
      * @return List<SysRole>
      */
     @Override
-    public List<SysRole> queryByRoleIds(List<Integer> roleIds) {
+    public List<SysRole> queryByRoleIds(List<String> roleIds) {
         if (CollectionUtils.isEmpty(roleIds)) {
             return  new ArrayList<>();
         }

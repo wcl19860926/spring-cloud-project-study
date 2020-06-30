@@ -20,12 +20,12 @@ private static final long serialVersionUID=1L;
 * 
 */
 @ApiModelProperty(value = "")
-private   Integer  userId;
+private   String  userId;
 
 /**
 * 
 */
 @ApiModelProperty(value = "")
-private   Integer  roleId;
+private   String  roleId;
 
 }

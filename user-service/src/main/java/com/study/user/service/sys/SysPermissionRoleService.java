@@ -21,7 +21,7 @@ public interface SysPermissionRoleService extends BaseService<SysPermissionRole,
      * @param roleId
      * @return
      */
-    List<SysPermissionRole> findByRoleId(Integer roleId);
+    List<SysPermissionRole> findByRoleId(String roleId);
 
 
     /**
@@ -30,7 +30,7 @@ public interface SysPermissionRoleService extends BaseService<SysPermissionRole,
      * @param roleIds
      * @return
      */
-    List<SysPermissionRole> findByRoleIds(List<Integer> roleIds);
+    List<SysPermissionRole> findByRoleIds(List<String> roleIds);
 
 }
 

@@ -21,7 +21,7 @@ public interface SysRoleService extends BaseService<SysRole, String> {
      * @param roleIds
      * @return   List<SysRole>
      */
-    List<SysRole> queryByRoleIds(List<Integer> roleIds);
+    List<SysRole> queryByRoleIds(List<String> roleIds);
 
 
 }

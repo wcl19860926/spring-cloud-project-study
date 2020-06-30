@@ -38,7 +38,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
      * @return List<SysRole>
      */
     @Override
-    public List<SysPermission> queryByPermissionIds(List<Integer> permissionIds) {
+    public List<SysPermission> queryByPermissionIds(List<String> permissionIds) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("permissionIds", permissionIds);
         return super.selectList(paramsMap);
