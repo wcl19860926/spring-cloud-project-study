@@ -16,13 +16,6 @@ public  class  SysUser  extends  BaseEntity<String>{
 private static final long serialVersionUID=1L;
 
 
-
-/**
-* 用户信息表
-*/
-@ApiModelProperty(value = "用户信息表")
-private   String  id;
-
 /**
 * 用户名
 */

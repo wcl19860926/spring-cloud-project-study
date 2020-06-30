@@ -45,7 +45,6 @@ public class ShiroConfiguration extends AbstractShiroConfig {
         filterChainDefinitionMap.put("/api/v1/about", "anon");
         filterChainDefinitionMap.put("/api/v1/olddata/**", "anon");
         filterChainDefinitionMap.put("/api/v1/auth/**", "anon");
-        filterChainDefinitionMap.put("/api/v1/sys/files/download/**", "anon");
         filterChainDefinitionMap.put("/api/v1/flight/notice/**", "anon");
         filterChainDefinitionMap.put("/api/v1/**", "authc,kickout");
         filterChainDefinitionMap.put("/**", "anon");
@@ -56,11 +55,12 @@ public class ShiroConfiguration extends AbstractShiroConfig {
      * Shiro Realm
      */
     @Bean
-    public UserRealm createUserRealm() {
-        UserRealm userRealm = new UserRealm();
+    public UserServiceRealm createUserRealm() {
+        UserServiceRealm userRealm = new UserServiceRealm();
         //告诉realm,使用credentialsMatcher加密算法类来验证密文
         userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         userRealm.setCachingEnabled(false);
+
         return userRealm;
     }
 

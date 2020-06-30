@@ -31,7 +31,7 @@
         <apache.commons.beanutils>1.9.3</apache.commons.beanutils>
         <com.google.zxing.version>3.1.0</com.google.zxing.version>
         <swagger2.version>2.9.2</swagger2.version>
-        <shiro-spring.version>1.4.0</shiro-spring.version>
+        <shiro-spring.version>1.5.3</shiro-spring.version>
         <poi.version>3.17</poi.version>
 
         <jackson.version>2.9.9</jackson.version>
@@ -91,12 +91,31 @@
                 <artifactId>commons-codec</artifactId>
                 <version>1.11</version>
             </dependency>
-            <dependency>
+         <!-- <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro-spring.version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro-spring.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-web-starter</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-quartz</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-aspectj</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>

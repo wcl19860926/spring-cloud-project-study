@@ -14,8 +14,10 @@ import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,8 +79,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
     }
 
     @Override
-    public List<T> findList(Map<String, Object> params) {
-        return getMapper().queryList(params);
+    public List<T> selectList(Map<String, Object> params) {
+        List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
+        if (CollectionUtils.isEmpty(data)) {
+            return new ArrayList<>();
+        }
+        return data;
     }
 
 
@@ -87,7 +93,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
      */
     @Override
     public List<T> selectList(String statement, @Param("map") Map<String, Object> params) {
-        return sqlSession.selectList(getMapperName() + statement, params);
+        List<T>  data = sqlSession.selectList(getMapperName() + statement, params);
+        if (CollectionUtils.isEmpty(data)) {
+            return new ArrayList<>();
+        }
+        return data;
     }
 
 
@@ -111,6 +121,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
         List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
+        if (CollectionUtils.isEmpty(data)) {
+            data =  new ArrayList<>();
+        }
         pageData.setData(data);
         return ResultDto.sucess(pageData);
 
@@ -126,6 +139,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
         List<T> data = sqlSession.selectList(getMapperName() + statement, params);
+        if (CollectionUtils.isEmpty(data)) {
+            data =  new ArrayList<>();
+        }
         pageData.setData(data);
         return ResultDto.sucess(pageData);
     }

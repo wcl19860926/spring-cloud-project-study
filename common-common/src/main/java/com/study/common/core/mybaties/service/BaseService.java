@@ -26,7 +26,7 @@ public interface BaseService<T extends BaseEntity, PK extends Serializable> {
 
     T findById(PK id);
 
-    List<T> findList(Map<String, Object> params);
+    List<T> selectList(Map<String, Object> params);
 
 
     List<T> selectList(String statement, @Param("map") Map<String, Object> params);

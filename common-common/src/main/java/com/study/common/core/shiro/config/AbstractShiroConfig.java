@@ -36,12 +36,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author : zhaoxuan
- * @date : 2019/12/4
+ * AtLeastOneSuccessfulStrategy ：如果一个（或更多）Realm 验证成功，则整体的尝试被认
+ * 为是成功的。如果没有一个验证成功，则整体尝试失败。
+ * FirstSuccessfulStrategy 只有第一个成功地验证的Realm 返回的信息将被使用。所有进一步
+ * 的Realm 将被忽略。如果没有一个验证成功，则整体尝试失败
+ * AllSucessfulStrategy 为了整体的尝试成功，所有配置的Realm 必须验证成功。如果没有一
+ * 个验证成功，则整体尝试失败。
+ * ModularRealmAuthenticator 默认的是AtLeastOneSuccessfulStrategy
  */
 public abstract class AbstractShiroConfig {
 
-    private static final int entryTimes = 1024;
+    private static final int entryTimes = 3;
     private static final String MD5 = "MD5";
     private static final String cookName = "DCS_JSESSIONID";
     private static final String cacheName = "shiro_SessionCache";
@@ -77,14 +82,14 @@ public abstract class AbstractShiroConfig {
         shiroFilterFactoryBean.getFilters().put("authc", new CusFormAuthenticationFilter());
         shiroFilterFactoryBean.getFilters().put("roles", new CusFormAuthenticationFilter());
         shiroFilterFactoryBean.getFilters().put("perms", new CusPermissionsAuthorizationFilter());
-        shiroFilterFactoryBean.getFilters().put("kickout", this.createKickoutSessionControlFilter());
+        shiroFilterFactoryBean.getFilters().put("kickout", createKickedOutSessionControlFilter());
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 
-    @Bean
-    public KickoutSessionControlFilter createKickoutSessionControlFilter() {
+
+    public KickoutSessionControlFilter createKickedOutSessionControlFilter() {
         return new KickoutSessionControlFilter();
     }
 

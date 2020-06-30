@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author
  * @date Thu Jun 18 15:05:00 CST 2020
  */
-@Service(value = "sysUserServiceImpl")
+@Service(value = "sysUserService")
 public class SysUserServiceImpl extends  BaseServiceImpl<SysUser , String> implements SysUserService{
 
 

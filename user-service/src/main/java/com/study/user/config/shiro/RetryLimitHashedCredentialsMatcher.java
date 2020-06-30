@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author xiquee.com. <br>
- * @date 2018-11-09 10:16:00
- */
+
 @Component
 public class RetryLimitHashedCredentialsMatcher extends AbstractCredentialsMatcher {
     @Autowired

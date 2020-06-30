@@ -10,18 +10,12 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "", description = "")
-public  class  SsyRole  extends  BaseEntity<String>{
+public  class SysRole extends  BaseEntity<String>{
 
 
 private static final long serialVersionUID=1L;
 
 
-
-/**
-* 
-*/
-@ApiModelProperty(value = "")
-private   String  id;
 
 /**
 * 

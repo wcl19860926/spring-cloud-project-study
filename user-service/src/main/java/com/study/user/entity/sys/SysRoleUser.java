@@ -16,13 +16,6 @@ public  class  SysRoleUser  extends  BaseEntity<String>{
 private static final long serialVersionUID=1L;
 
 
-
-/**
-* 
-*/
-@ApiModelProperty(value = "")
-private   String  id;
-
 /**
 * 
 */

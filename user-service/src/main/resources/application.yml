@@ -16,6 +16,6 @@ spring:
 mybatis:
   configLocation: classpath:mybatis-config.xml
   mapperLocations: classpath*:mapper/**/*.xml
-  typeAliasesPackage: tk.mapper.model
+  typeAliasesPackage: com.study.user.entity.*
 server:
   port: 8080

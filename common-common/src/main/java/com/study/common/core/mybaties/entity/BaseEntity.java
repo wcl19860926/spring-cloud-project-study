@@ -6,15 +6,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class BaseEntity<PK>  implements Serializable {
+public class BaseEntity<Pk> implements Serializable {
 
-    private PK id;
+    private  Pk  id;
 
-    private Date createTime;
-
-    private Date updateTime;
-
-    private  boolean isDelete;
 
 
 }

@@ -105,6 +105,12 @@
            <if test="permissionId != null">
             and    permissionId =  #{permissionId,jdbcType=INTEGER}
            </if>
+            <if test="roleIds != null and !roleIds.isEmpty()">
+                and  roleId in
+                <foreach collection="roleIds" index="index" close=")" open="(" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
         </where>
     </select>
 

@@ -119,6 +119,12 @@
            <if test="description != null">
             and    description =  #{description,jdbcType=VARCHAR}
            </if>
+           <if test="permissionIds != null and !permissionIds.isEmpty()">
+                and  id in
+                <foreach collection="permissionIds" index="index" close=")" open="(" item="item" separator=",">
+                    #{item}
+                </foreach>
+           </if>
         </where>
     </select>
 
