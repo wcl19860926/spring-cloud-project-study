@@ -22,7 +22,7 @@ public interface RightManagerService {
      * @param roleId
      * @return
      */
-    List<SysPermission>  findPermissionsByRoleId(String roleId);
+    List<SysPermission>  findPermissionsByRoleId(Integer roleId);
 
 
 
@@ -31,5 +31,13 @@ public interface RightManagerService {
      * @param roleIds
      * @return
      */
-    List<SysPermission>  findPermissionsByRoleIds(List<String> roleIds);
+    List<SysPermission>  findPermissionsByRoleIds(List<Integer> roleIds);
+
+
+    /**
+     * 通过UserId 查询用户对应的权限信息
+     * @param userId
+     * @return
+     */
+    List<SysPermission>  findPermissionsByUserId(String userId);
 }

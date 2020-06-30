@@ -8,7 +8,7 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB ;
 
 CREATE TABLE `sys_role` (
-   `id` varchar(32)  NOT NULL ,
+   `id` varchar(32) NOT NULL ,
    `code` varchar(50) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -16,24 +16,24 @@ CREATE TABLE `sys_role` (
 
 CREATE TABLE `sys_role_user` (
   `id` varchar(32)  NOT NULL ,
-  `userId` int(11) unsigned NOT NULL,
-  `roleId` int(11) unsigned NOT NULL,
+  `userId` varchar(32)  NOT NULL,
+  `roleId` varchar(32)  NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_userId` (`userId`),
   KEY `idx_roleId` (`roleId`)
 ) ENGINE=InnoDB ;
 
 CREATE TABLE `sys_permission` (
-  `id` varchar(32)  NOT NULL ,
-  `code` varchar(30) DEFAULT NULL,
+  `id` varchar(32) NOT NULL ,
+  `code` varchar(32) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB ;
 CREATE TABLE `sys_permission_role` (
   `id` varchar(32)  NOT NULL ,
-  `roleId` int(11) unsigned NOT NULL,
-  `permissionId` int(11) unsigned NOT NULL,
+  `roleId` varchar(32)  NOT NULL,
+  `permissionId` varchar(32)  NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_role2` (`roleId`),
   KEY `idx_permission` (`permissionId`)
@@ -58,11 +58,11 @@ VALUES
 	(7,2,2);
 
 
-INSERT INTO `sys_permission` (`id`, `code` ,`name`, `url`, `description` )
+INSERT INTO `sys_permission` (`id`, `code` ,`name`,  `description` )
 VALUES
-	(1,'ROLE_HOME','首页权限','/',NULL),
-	(2,'ROLE_ADMIN','管理员权限','/admin',NULL),
-	(3,'ROLE_USER','用户权限','/user',NULL);
+	(1,'ROLE_HOME','首页权限',NULL),
+	(2,'ROLE_ADMIN','管理员权限',NULL),
+	(3,'ROLE_USER','用户权限',NULL);
 
 INSERT INTO `sys_permission_role` (`id`, `roleId`, `permissionId`)
 VALUES
