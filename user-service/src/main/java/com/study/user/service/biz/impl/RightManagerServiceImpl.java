@@ -98,11 +98,12 @@ public class RightManagerServiceImpl implements RightManagerService {
 
     /**
      * 通userCode 查询用户信息
+     *
      * @param userCode
      * @return
      */
     @Override
     public SysUser findSysUserByUserCode(String userCode) {
-        return null;
+        return sysUserService.findUserByUserCode(userCode);
     }
 }

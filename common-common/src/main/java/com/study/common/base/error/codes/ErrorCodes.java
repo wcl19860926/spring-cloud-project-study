@@ -28,12 +28,13 @@ public class ErrorCodes {
      */
     public static final ErrorCode ACCOUNT_LOCKED = new ErrorCode(10301, "账户被锁定!");
     public static final ErrorCode ACCOUNT_EXIST = new ErrorCode(10302, "账户已存在!");
-    public static final ErrorCode ACCOUNT_NOT_EXIST = new ErrorCode(10303, "账户不存在!");
     public static final ErrorCode ACCOUNT_USERNAME_OR_PASSWORD_ERROR = new ErrorCode(10304, "账户名或者密码错误!");
-    public static final ErrorCode ACCOUNT_PASSWORD_ERROR = new ErrorCode(10305, "密码错误!");
+    public static final ErrorCode ACCOUNT_PASSWORD_ERROR_TOO_MANY_TIMES = new ErrorCode(10305, "验证未通过,错误次数过多!");
     public static final ErrorCode ACCOUNT_OLD_PASSWORD_ERROR = new ErrorCode(10306, "原始密码错误!");
     public static final ErrorCode ACCOUNT_TWO_PASSWORD_NOT_EQUAL = new ErrorCode(10307, "两次密码输入不一致!");
     public static final ErrorCode ACCOUNT_PASSWORD_NOT_CHANGE = new ErrorCode(10308, "原密码未变更!");
+
+
     /**
      * 参数异常10001-10100
      */

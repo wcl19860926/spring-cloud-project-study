@@ -87,6 +87,10 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
         return data;
     }
 
+    @Override
+    public T selectOne(Map<String, Object> params) {
+        return sqlSession.selectOne(getMapperName() + SELECT_BY_PAGE_LIST, params);
+    }
 
     /**
      * 自定义sql查询List<EntityMap>

@@ -8,6 +8,9 @@ import com.study.user.service.sys.SysUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *  服务实现类
  *
@@ -28,4 +31,15 @@ public class SysUserServiceImpl extends  BaseServiceImpl<SysUser , String> imple
         }
 
 
+    /**
+     * 能过userCode查询用户信息
+     * @param userCode
+     * @return
+     */
+    @Override
+    public SysUser findUserByUserCode(String userCode) {
+        Map<String ,Object>  paramMap = new HashMap<>();
+        paramMap.put("userCode" , userCode);
+        return selectOne(paramMap);
+    }
 }

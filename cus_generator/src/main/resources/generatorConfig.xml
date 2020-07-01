@@ -69,7 +69,7 @@
         <table schema="root"  tableName="sys_user"    domainObjectName="SysUser" catalog="boo-shiro">
             <property name="useActualColumnNames" value="true"/>
         </table>
-       <table schema="boo-shiro" tableName="sys_role" domainObjectName="SysRole">
+    <!--   <table schema="boo-shiro" tableName="sys_role" domainObjectName="SysRole">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table schema="boo-shiro" tableName="sys_role_user" domainObjectName="SysRoleUser">
@@ -80,7 +80,7 @@
         </table>
         <table schema="boo-shiro" tableName="sys_permission_role" domainObjectName="SysPermissionRole">
             <property name="useActualColumnNames" value="true"/>
-        </table>
+        </table>-->
 
 
 

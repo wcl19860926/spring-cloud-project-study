@@ -29,6 +29,9 @@ public interface BaseService<T extends BaseEntity, PK extends Serializable> {
     List<T> selectList(Map<String, Object> params);
 
 
+    T selectOne(Map<String, Object> params);
+
+
     List<T> selectList(String statement, @Param("map") Map<String, Object> params);
 
 

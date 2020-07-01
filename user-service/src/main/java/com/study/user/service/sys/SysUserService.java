@@ -12,5 +12,8 @@ import com.study.common.core.mybaties.service.BaseService;
 public interface SysUserService  extends   BaseService<SysUser , String> {
 
 
+    SysUser   findUserByUserCode(String  userCode);
+
+
 }
 

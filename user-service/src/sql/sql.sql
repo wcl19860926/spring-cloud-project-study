@@ -1,11 +1,15 @@
 CREATE TABLE `sys_user` (
-  `id` varchar(32)  NOT NULL ,
-  `username` varchar(100) DEFAULT NULL,
-  `userCode` varchar(50) DEFAULT NULL,
-  `password` varchar(150) DEFAULT NULL,
-  `salt` varchar(20) DEFAULT NULL,
+  `id` varchar(32) NOT NULL COMMENT '主键',
+  `userCode` varchar(50) NOT NULL COMMENT '登录用户名',
+  `password` varchar(150) NOT NULL COMMENT '密码',
+  `salt` varchar(20) NOT NULL COMMENT '盐值',
+  `expireTime` timestamp NOT NULL COMMENT '到期时间',
+  `effectiveTime` timestamp NOT NULL COMMENT '生效时间',
+  `isLocked` bit(1) DEFAULT b'0' COMMENT '是否锁定',
+  `isDeleted` bit(1) DEFAULT b'0' COMMENT '是否删除',
+  `createTime` timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP comment '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `sys_role` (
    `id` varchar(32) NOT NULL ,
@@ -41,7 +45,7 @@ CREATE TABLE `sys_permission_role` (
 
 
 
-INSERT INTO `sys_user` (`id`, `username`, `password`)
+INSERT INTO `sys_user` (`id`, `userCode`, `password`)
 VALUES
 	(1,'admin','6d789d4353c72e4f625d21c6b7ac2982'),
 	(2,'user','36f1cab655c5252fc4f163a1409500b8');
