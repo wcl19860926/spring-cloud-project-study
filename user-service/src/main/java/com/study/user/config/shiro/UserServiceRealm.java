@@ -30,7 +30,7 @@ public class UserServiceRealm extends AuthorizingRealm {
      */
     @Override
     public AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authonToken) throws AuthenticationException {
-
+           //authonToken  为Subject.login(obj)传过来的对象，
         String userCode = (String) authonToken.getPrincipal();
 
         SysUser user = rightManagerService.findSysUserByUserCode(userCode);
