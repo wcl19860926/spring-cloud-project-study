@@ -15,8 +15,6 @@ import java.util.Arrays;
  * shiro 使用缓存时出现：java.io.NotSerializableException: org.apache.shiro.util.SimpleByteSource
  * 序列化后，无法反序列化的问题
  *
- * @author : zhaoxuan
- * @date : 2020/3/20
  */
 public class ShiroSimpleByteSource implements ByteSource, Serializable {
     private static final long serialVersionUID = 5175082362119580768L;

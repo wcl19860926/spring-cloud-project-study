@@ -1,7 +1,7 @@
-package com.study.user.config.shiro;
+package com.study.user.security.shiro.matcher;
 
 
-import com.study.user.security.shiro.AbstractCredentialsMatcher;
+import com.study.user.security.shiro.matcher.AbstractCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

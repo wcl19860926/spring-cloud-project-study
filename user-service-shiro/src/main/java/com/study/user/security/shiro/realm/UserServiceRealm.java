@@ -1,4 +1,4 @@
-package com.study.user.config.shiro;
+package com.study.user.security.shiro.realm;
 
 import com.study.common.util.EntityUtils;
 import com.study.user.entity.sys.SysPermission;

@@ -1,6 +1,7 @@
-package com.study.user.security.shiro;
+package com.study.user.security.shiro.matcher;
 
 
+import com.study.user.security.shiro.CusAuthenticationInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -26,6 +27,13 @@ public abstract class AbstractCredentialsMatcher extends
         passwordRetryCache = cacheManager.getCache(getPasswordRetryCacheName());
     }
 
+
+    /**
+     *  这是shiro真正调用密码匹配的方法
+     * @param token
+     * @param info
+     * @return
+     */
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token,
                                       AuthenticationInfo info) {

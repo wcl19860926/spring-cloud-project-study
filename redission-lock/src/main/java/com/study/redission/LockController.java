@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @Description: 不基于注解方式锁操作
  *
- * @author xub
  * @date 2019/6/19 下午6:01
  */
 @RestController

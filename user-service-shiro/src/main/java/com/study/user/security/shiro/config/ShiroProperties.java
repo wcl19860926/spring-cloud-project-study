@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
     prefix = "shiro.login"
 )
 @Data
-public class SystemSettings {
+public class ShiroProperties {
     private int pageSize;
     private boolean vcodeForTest;
     private int loginAttemptTimes;
     private int loginAttemptSpan;
     private int leftTimesForErrPswd;
 
-    public SystemSettings() {
+    public ShiroProperties() {
     }
 
 

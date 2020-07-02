@@ -65,15 +65,6 @@ public abstract class AbstractShiroConfig {
         return cacheName;
     }
 
-    protected ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager, Map<String, String> filterChain) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.getFilters().put("authc", new CusFormAuthenticationFilter());
-        shiroFilterFactoryBean.getFilters().put("roles", new CusRolesAuthorizationFilter());
-        shiroFilterFactoryBean.getFilters().put("perms", new CusPermissionsAuthorizationFilter());
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
-        return shiroFilterFactoryBean;
-    }
 
 
     protected ShiroFilterFactoryBean createShiroFilterFactoryBean(SecurityManager securityManager, Map<String, String> filterChainDefinitionMap) {
