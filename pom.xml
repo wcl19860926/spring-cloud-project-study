@@ -12,9 +12,10 @@
         <module>register-center</module>
         <module>api-gateway</module>
         <module>common-common</module>
-        <module>user-service</module>
+        <module>user-service-shiro</module>
         <module>mybaties-simple-generator</module>
         <module>cus_generator</module>
+        <module>redission-lock</module>
     </modules>
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>
@@ -39,6 +40,9 @@
         <fastjson.version>1.2.62</fastjson.version>
         <jackson-databind.varsion>2.9.10.5</jackson-databind.varsion>
         <httpclient.version>4.5.10</httpclient.version>
+
+        <com.study.commont.model.version>1.0-SNAPSHOT</com.study.commont.model.version>
+
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -177,6 +181,17 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
                 <version>3.17</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.20</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>3.5.4</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>

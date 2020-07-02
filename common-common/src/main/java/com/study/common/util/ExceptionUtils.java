@@ -1,7 +1,7 @@
 package com.study.common.util;
 
 
-import com.study.common.core.exception.BizException;
+import com.study.common.exception.BaseException;
 
 public final class ExceptionUtils {
 
@@ -15,8 +15,8 @@ public final class ExceptionUtils {
      * @param t   异常信息
      * @return 返回异常
      */
-    public static BizException newException(String msg, Throwable t, Object... params) {
-        return new BizException(StringUtils.format(msg, params), t);
+    public static BaseException newException(String msg, Throwable t, Object... params) {
+        return new BaseException(StringUtils.format(msg, params), t);
     }
 
     /**
@@ -25,8 +25,8 @@ public final class ExceptionUtils {
      * @param msg 消息
      * @return 返回异常
      */
-    public static BizException newException(String msg, Object... params) {
-        return new BizException(StringUtils.format(msg, params));
+    public static BaseException newException(String msg, Object... params) {
+        return new BaseException(StringUtils.format(msg, params));
     }
 
     /**
@@ -35,8 +35,8 @@ public final class ExceptionUtils {
      * @param t 异常
      * @return 返回异常
      */
-    public static BizException newException(Throwable t) {
-        return new BizException(t);
+    public static BaseException newException(Throwable t) {
+        return new BaseException(t);
     }
 
 }

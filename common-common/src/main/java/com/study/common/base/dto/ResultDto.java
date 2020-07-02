@@ -2,8 +2,7 @@ package com.study.common.base.dto;
 
 
 import com.study.common.base.error.codes.ErrorCode;
-import com.study.common.base.error.exception.BaseException;
-import com.study.common.core.exception.BizException;
+import com.study.common.exception.BaseException;
 import com.study.common.i18n.I18nMessageHelper;
 
 /**
@@ -45,7 +44,7 @@ public class ResultDto<T> {
         this.isSuccess = Boolean.FALSE;
     }
 
-    private ResultDto(BizException e) {
+    private ResultDto(BaseException e) {
         this.code = e.getErrorCode();
         this.isSuccess = Boolean.FALSE;
         this.message =e.getMessage();

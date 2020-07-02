@@ -129,7 +129,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
             data =  new ArrayList<>();
         }
         pageData.setData(data);
-        return ResultDto.sucess(pageData);
+        return ResultDto.success(pageData);
 
     }
 
@@ -147,7 +147,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
             data =  new ArrayList<>();
         }
         pageData.setData(data);
-        return ResultDto.sucess(pageData);
+        return ResultDto.success(pageData);
     }
 
 

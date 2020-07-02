@@ -1,7 +1,6 @@
 package com.study.common.core.web.vcode;
 
 
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,11 +69,4 @@ public class VCodeGenerator {
     private static final int CHECK_CODE_OFFSET = 2;
 
 
-
-
-    static synchronized int generateNewRandom() {
-        int random = VCodeGenerator.genRandomNum();
-        SecurityUtils.getSubject().getSession().setAttribute(VCODE_KEY, random);
-        return random;
-    }
 }
