@@ -29,10 +29,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
+import javax.servlet.DispatcherType;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -104,6 +107,18 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
+    }
+
+
+    @Bean({"myFilterRegistration"})
+    public FilterRegistrationBean myFilterRegistration() {
+        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+        filterRegistration.setDispatcherTypes(DispatcherType.REQUEST, new DispatcherType[]{DispatcherType.ASYNC});
+        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+        filterRegistration.addInitParameter("targetFilterLifecycle", "true");
+        filterRegistration.setEnabled(true);
+        filterRegistration.addUrlPatterns(new String[]{"/*"});
+        return filterRegistration;
     }
 
 
