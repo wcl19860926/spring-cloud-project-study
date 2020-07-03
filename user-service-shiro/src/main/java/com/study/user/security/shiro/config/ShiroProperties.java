@@ -1,26 +1,42 @@
 package com.study.user.security.shiro.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
-@Component
-@ConfigurationProperties(
-    prefix = "shiro.login"
-)
+
 @Data
+@Configuration
+//@ConditionalOnProperty(prefix ="shiro.login" ,value = "attemptTimes")
 public class ShiroProperties {
-    private int pageSize;
-    private boolean vcodeForTest;
-    private int loginAttemptTimes;
-    private int loginAttemptSpan;
-    private int leftTimesForErrPswd;
+    /**
+     * 登录时最大错误次数
+     */
+    @Value("${shiro.login.attempt-times:3}")
+    private int attemptTimes;
 
-    public ShiroProperties() {
-    }
+    /**
+     * 超过最大次数后，账号锁定时间 , 默认为分钟
+     */
+    @Value("${shiro.login.lock-time:3600}")
+    private int lockTime ;
 
 
-    public String toString() {
-        return "SystemSettings(pageSize=" + this.getPageSize() + ", vcodeForTest=" + this.isVcodeForTest() + ", loginAttemptTimes=" + this.getLoginAttemptTimes() + ", loginAttemptSpan=" + this.getLoginAttemptSpan() + ", leftTimesForErrPswd=" + this.getLeftTimesForErrPswd() + ")";
-    }
+    /**
+     * 密码Hash数次数
+     */
+    @Value("${shiro.login.hash-times:16}")
+    private int hashTimes ;
+
+
+
+    /**
+     * 密码Hash算法
+     */
+    @Value("${shiro.login.hash-algorithm:'MD5'}")
+    private String hashAlgorithm ;
 }

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Api(value = "系统登录管理", tags = "系统用户登录，登出管理")
 @RestController
-@RequestMapping("/sysUser")
+@RequestMapping("/sysUser/auth")
 public class SysUserController extends BaseController {
 
 

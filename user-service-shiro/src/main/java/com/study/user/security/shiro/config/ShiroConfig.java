@@ -4,17 +4,16 @@ import com.study.user.security.shiro.ShiroSessionManager;
 import com.study.user.security.shiro.cache.ShiroRedisCacheManager;
 import com.study.user.security.shiro.filter.CusFormAuthenticationFilter;
 import com.study.user.security.shiro.filter.CusPermissionsAuthorizationFilter;
-import com.study.user.security.shiro.filter.CusRolesAuthorizationFilter;
 import com.study.user.security.shiro.filter.KickoutSessionControlFilter;
+import com.study.user.security.shiro.matcher.RetryLimitHashedCredentialsMatcher;
+import com.study.user.security.shiro.realm.UserServiceRealm;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
-import org.slf4j.Logger;
 import org.apache.shiro.session.mgt.AbstractSessionManager;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -25,13 +24,17 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,17 +47,19 @@ import java.util.Map;
  * 个验证成功，则整体尝试失败。
  * ModularRealmAuthenticator 默认的是AtLeastOneSuccessfulStrategy
  */
-public abstract class AbstractShiroConfig {
+@Configuration
+public class ShiroConfig {
 
-    private static final int entryTimes = 3;
-    private static final String MD5 = "MD5";
+
+    @Autowired
+    private ShiroProperties shiroProperties;
+
+
     private static final String cookName = "DCS_JSESSIONID";
     private static final String cacheName = "shiro_SessionCache";
 
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    protected abstract List<AuthorizingRealm> authorizingRealms();
+    private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
 
     protected String setCookName() {
@@ -66,9 +71,31 @@ public abstract class AbstractShiroConfig {
     }
 
 
+    /**
+     * Shiro的Web过滤器Factory 命名:shiroFilter<br />
+     *
+     * @param securityManager
+     * @return
+     */
+    @Bean(name = "shiroFilter")
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
+        /*定义shiro过滤器,例如实现自定义的FormAuthenticationFilter，需要继承FormAuthenticationFilter
+         */
+        /*定义shiro过滤链  Map结构
+         * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的
+         * anon：它对应的过滤器里面是空的,什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种
+         * authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter
+         */
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        // <!-- 过滤链定义，从上向下顺序执行
+        // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
+        filterChainDefinitionMap.put("/sysUser/auth/**", "anon");
+        filterChainDefinitionMap.put("/api/v1/**", "authc,kickout");
+        filterChainDefinitionMap.put("/**", "anon");
+        return createShiroFilterFactoryBean(securityManager, filterChainDefinitionMap);
+    }
 
     protected ShiroFilterFactoryBean createShiroFilterFactoryBean(SecurityManager securityManager, Map<String, String> filterChainDefinitionMap) {
-        logger.info("注入Shiro的Web过滤器-->shiroFilter：{}", ShiroFilterFactoryBean.class);
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.getFilters().put("authc", new CusFormAuthenticationFilter());
         shiroFilterFactoryBean.getFilters().put("roles", new CusFormAuthenticationFilter());
@@ -90,9 +117,7 @@ public abstract class AbstractShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(getModularRealmAuthenticator());
         List<Realm> reams = new ArrayList<>();
-        if (authorizingRealms() != null) {
-            reams.addAll(authorizingRealms());
-        }
+        reams.add(authorizingRealms());
         securityManager.setRealms(reams);
         if (cacheManager != null) {
             securityManager.setCacheManager(cacheManager);
@@ -170,16 +195,32 @@ public abstract class AbstractShiroConfig {
     }
 
     /**
-     * 凭证匹配器 （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
-     * 所以我们需要修改下doGetAuthenticationInfo中的代码; ）
+     * 凭证匹配器
+     * 密码的匹配是CredentitalsMatcher#doCredentialsMatch方法中进行的
      *
      * @return
      */
     @Bean("hashedCredentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName(MD5);
-        hashedCredentialsMatcher.setHashIterations(entryTimes);
+        RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager());
+        hashedCredentialsMatcher.setHashAlgorithmName(shiroProperties.getHashAlgorithm());
+        hashedCredentialsMatcher.setHashIterations(shiroProperties.getHashTimes());
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
+
+
+    /**
+     * Shiro Realm
+     */
+    @Bean
+    public UserServiceRealm authorizingRealms() {
+        UserServiceRealm userRealm = new UserServiceRealm();
+        //告诉realm,使用credentialsMatcher加密算法类来验证密文
+        userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        userRealm.setCachingEnabled(false);
+        return userRealm;
+    }
+
+
 }
