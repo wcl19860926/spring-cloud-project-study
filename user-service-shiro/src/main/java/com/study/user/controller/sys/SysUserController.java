@@ -9,6 +9,8 @@ import com.study.user.dto.sys.LoginDto;
 import com.study.user.dto.sys.TokenDto;
 import com.study.user.service.sys.SysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -37,6 +39,8 @@ public class SysUserController extends BaseController {
     private SysUserService sysUserService;
 
 
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @ApiImplicitParam(paramType = "body", name = "loginDto", value = "用户登录参数", required = true, dataType = "LoginDto")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultDto login(@RequestBody @Validated LoginDto loginDto, HttpServletRequest request) throws Exception {
         String userName = loginDto.getUsername();

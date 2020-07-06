@@ -52,4 +52,11 @@ public final class HashUtils {
     public static String sHA512Hash(String plainPassword, String salt, int hashIterations) {
         return new Sha512Hash(plainPassword, salt, hashIterations).toHex();
     }
+
+
+    public static  void  main(String[] args){
+
+
+        System.out.println(md5Hash("123" ,"123" ,1024));
+    }
 }
