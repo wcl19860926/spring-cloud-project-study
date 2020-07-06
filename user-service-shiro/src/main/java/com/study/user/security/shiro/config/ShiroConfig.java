@@ -54,8 +54,6 @@ import java.util.Map;
 public class ShiroConfig {
 
 
-    @Autowired
-    private ShiroProperties shiroProperties;
 
 
     private static final String cookName = "DCS_JSESSIONID";
@@ -128,11 +126,11 @@ public class ShiroConfig {
 
 
     @Bean
-    protected SecurityManager securityManager(SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager cacheManager) {
+    protected SecurityManager securityManager(SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager cacheManager ,ShiroProperties shiroProperties) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(getModularRealmAuthenticator());
         List<Realm> reams = new ArrayList<>();
-        reams.add(authorizingRealms());
+        reams.add(authorizingRealms(shiroProperties));
         securityManager.setRealms(reams);
         if (cacheManager != null) {
             securityManager.setCacheManager(cacheManager);
@@ -173,6 +171,7 @@ public class ShiroConfig {
     /**
      * 多realm验证,一个通过即可
      */
+    @Bean("authenticator")
     protected Authenticator getModularRealmAuthenticator() {
         ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
         authenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
@@ -216,7 +215,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean("hashedCredentialsMatcher")
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+    public HashedCredentialsMatcher hashedCredentialsMatcher(ShiroProperties shiroProperties) {
         RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager());
         hashedCredentialsMatcher.setHashAlgorithmName(shiroProperties.getHashAlgorithm());
         hashedCredentialsMatcher.setHashIterations(shiroProperties.getHashTimes());
@@ -228,11 +227,11 @@ public class ShiroConfig {
     /**
      * Shiro Realm
      */
-    @Bean
-    public UserServiceRealm authorizingRealms() {
+    @Bean("authorizer")
+    public UserServiceRealm authorizingRealms(ShiroProperties shiroProperties) {
         UserServiceRealm userRealm = new UserServiceRealm();
         //告诉realm,使用credentialsMatcher加密算法类来验证密文
-        userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        userRealm.setCredentialsMatcher(hashedCredentialsMatcher(shiroProperties));
         userRealm.setCachingEnabled(false);
         return userRealm;
     }

@@ -3,7 +3,7 @@
 <mapper namespace="xml.sys.boo-shiro.SysUserMapper">
 
 
-    <resultMap id="BaseResultMap" type="com.study.user.entity.sys.boo-shiro.SysUser">
+    <resultMap id="BaseResultMap" type="com.study.user.entity.sys.SysUser">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="userCode" jdbcType="VARCHAR" property="userCode"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -20,7 +20,7 @@
         id, userCode, password, salt, expireTime, effectiveTime, isLocked, isDeleted, createTime
     </sql>
 
-    <insert id="insert" parameterType="com.study.user.entity.sys.boo-shiro.SysUser">
+    <insert id="insert" parameterType="com.study.user.entity.sys.SysUser">
         insert into  sys_user
            (id, userCode, password, salt, expireTime, effectiveTime, isLocked, isDeleted, createTime)
         values (
@@ -30,7 +30,7 @@
     </insert>
 
 
-    <insert id="insertSelective" parameterType="com.study.user.entity.sys.boo-shiro.SysUser">
+    <insert id="insertSelective" parameterType="com.study.user.entity.sys.SysUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -92,7 +92,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.study.user.entity.sys.boo-shiro.SysUser">
+    <update id="updateByPrimaryKey" parameterType="com.study.user.entity.sys.SysUser">
 
         update sys_user
         set
@@ -110,7 +110,7 @@
 
 
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.study.user.entity.sys.boo-shiro.SysUser">
+    <update id="updateByPrimaryKeySelective" parameterType="com.study.user.entity.sys.SysUser">
         update  sys_user
         <set>
             <if test="userCode != null">

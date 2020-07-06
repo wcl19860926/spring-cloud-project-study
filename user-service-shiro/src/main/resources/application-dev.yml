@@ -1,10 +1,13 @@
 spring:
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       # JDBC 配置(驱动类自动从url的mysql识别,数据源类型自动识别)
-      url: jdbc:mysql://127.0.0.1:3306/oauth-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT-8
-      username: cloud
-      password: cloud
+      url: jdbc:mysql://127.0.0.1:3306/boo-shiro?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT-8
+      username: root
+      password: root
       driver-class-name:  com.mysql.cj.jdbc.Driver
       #连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive
       initial-size: 1
@@ -53,6 +56,8 @@ spring:
       #stat-view-servlet.deny=128.242.127.1/24,128.242.128.1
       # Spring监控配置，说明请参考Druid Github Wiki，配置_Druid和Spring关联监控配置
       #aop-patterns= # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
+
+
   ################### mysq end ##########################
   redis:
     ################### redis 单机版 start ##########################

@@ -85,9 +85,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <!--specify jar/war name-->
@@ -116,9 +117,9 @@
             </plugin>
         </plugins>
 
-     <!--   <filters>  指定使用的 filter
-            <filter>src/main/filters/${env}.properties</filter>
-        </filters>-->
+        <!--   <filters>  指定使用的 filter
+               <filter>src/main/filters/${env}.properties</filter>
+           </filters>-->
         <resources>
             <resource> <!-- 配置需要被替换的资源文件路径, properties 应该在 src/main/resource 目录下 -->
                 <directory>src/main/resources</directory>
