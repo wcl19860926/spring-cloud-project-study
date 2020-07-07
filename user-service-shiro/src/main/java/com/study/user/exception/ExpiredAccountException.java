@@ -12,11 +12,9 @@ public class ExpiredAccountException extends AccountException {
         super(message);
     }
 
-
     public ExpiredAccountException(Throwable cause) {
         super(cause);
     }
-
 
     public ExpiredAccountException(String message, Throwable cause) {
         super(message, cause);

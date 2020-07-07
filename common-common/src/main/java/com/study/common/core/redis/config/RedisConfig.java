@@ -17,8 +17,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
@@ -46,21 +45,4 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate1(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory);
-        JdkSerializationRedisSerializer serializeUtil = new JdkSerializationRedisSerializer();
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        // key采用String的序列化方式
-        template.setKeySerializer(stringRedisSerializer);
-        // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
-        // value序列化方式采用jdk
-        template.setValueSerializer(serializeUtil);
-        // hash的value序列化方式采用jdk
-        template.setHashValueSerializer(serializeUtil);
-        template.afterPropertiesSet();
-        return template;
-    }
 }
