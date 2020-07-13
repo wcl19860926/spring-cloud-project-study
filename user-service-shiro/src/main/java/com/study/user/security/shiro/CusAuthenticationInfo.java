@@ -15,14 +15,12 @@ import java.util.Map;
 @Data
 public class CusAuthenticationInfo extends SimpleAuthenticationInfo {
 
-    private int userType;
     private String userId;
     private String username;
     private Map<String, Object> properties = new HashMap<>();
 
-    public CusAuthenticationInfo(int userType, String userId, String username, String password, ByteSource credentialsSalt, String realmName) {
+    public CusAuthenticationInfo( String userId, String username, String password, ByteSource credentialsSalt, String realmName) {
         super(username, password, credentialsSalt, realmName);
-        this.userType = userType;
         this.userId = userId;
         this.username = username;
     }

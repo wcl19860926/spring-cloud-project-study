@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "系统登录管理", tags = "系统用户登录，登出管理")
 @RestController
-@RequestMapping("/sysUser/manger")
+@RequestMapping("/api/sysUser/manger")
 public class SysUserManagerController extends BaseController {
 
 

@@ -23,7 +23,7 @@ import java.util.Map;
 
 public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializable> implements BaseService<T, PK> {
 
-    private static final String SELECT_BY_PAGE_LIST = "queryList";
+    private static final String SELECT_BY_PAGE_LIST = "selectList";
 
     private IdGeneratorService idGeneratorService;
 
@@ -115,7 +115,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
      * 获取mapperName
      */
     private String getMapperName() {
-        return this.getMapper().getClass().getName();
+        return this.getMapper().getClass().getInterfaces()[0].getName() +".";
     }
 
 

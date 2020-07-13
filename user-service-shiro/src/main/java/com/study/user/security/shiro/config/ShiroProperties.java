@@ -37,6 +37,6 @@ public class ShiroProperties {
     /**
      * 密码Hash算法
      */
-    @Value("${shiro.login.hash-algorithm:'MD5'}")
+    @Value("${shiro.login.hash-algorithm:MD5}")
     private String hashAlgorithm ;
 }

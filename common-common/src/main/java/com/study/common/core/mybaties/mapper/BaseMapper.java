@@ -24,6 +24,5 @@ public interface BaseMapper<T extends BaseEntity, PK extends Serializable> {
 
     T selectByPrimaryKey(PK id);
 
-    List<T> queryList(@Param("map") Map<String, Object> params);
 
 }

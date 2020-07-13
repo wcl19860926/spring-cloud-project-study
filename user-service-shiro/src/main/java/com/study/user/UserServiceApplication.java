@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.study.user.mapper.**.*")
-@ComponentScan({"com.study.common"})
+@ComponentScan({"com.study.common","com.study.user"})
 public class UserServiceApplication {
 
 

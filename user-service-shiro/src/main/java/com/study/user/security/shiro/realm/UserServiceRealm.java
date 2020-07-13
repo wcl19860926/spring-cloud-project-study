@@ -4,6 +4,7 @@ import com.study.common.util.EntityUtils;
 import com.study.user.entity.sys.SysPermission;
 import com.study.user.entity.sys.SysRole;
 import com.study.user.entity.sys.SysUser;
+import com.study.user.security.shiro.CusAuthenticationInfo;
 import com.study.user.service.biz.RightManagerService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -30,7 +31,7 @@ public class UserServiceRealm extends AuthorizingRealm {
      */
     @Override
     public AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authonToken) throws AuthenticationException {
-           //authonToken  为Subject.login(obj)传过来的对象，
+        //authonToken  为Subject.login(obj)传过来的对象，
         String userCode = (String) authonToken.getPrincipal();
 
         SysUser user = rightManagerService.findSysUserByUserCode(userCode);
@@ -44,8 +45,8 @@ public class UserServiceRealm extends AuthorizingRealm {
             throw new LockedAccountException();
         }
         // 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
-        SimpleAuthenticationInfo authenticationInfo = new
-                SimpleAuthenticationInfo(user.getUserCode(), user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
+        CusAuthenticationInfo authenticationInfo = new
+                CusAuthenticationInfo(user.getId(), user.getUserCode(), user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
         return authenticationInfo;
     }
 

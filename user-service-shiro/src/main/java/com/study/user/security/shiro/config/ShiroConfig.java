@@ -11,6 +11,8 @@ import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.authz.ModularRealmAuthorizer;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -27,7 +29,6 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -52,8 +53,6 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-
-
 
 
     private static final String cookName = "DCS_JSESSIONID";
@@ -90,9 +89,11 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- 过滤链定义，从上向下顺序执行
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/sysUser/auth/**", "anon");
+        filterChainDefinitionMap.put("/api/sysUser/auth/**", "anon");
+        filterChainDefinitionMap.put("/swagger-ui/**", "anon");
+        filterChainDefinitionMap.put("/index/**", "anon");
+        filterChainDefinitionMap.put("/error/**", "anon");
         filterChainDefinitionMap.put("/api/v1/**", "authc,kickout");
-        filterChainDefinitionMap.put("/**", "anon");
         return createShiroFilterFactoryBean(securityManager, filterChainDefinitionMap);
     }
 
@@ -108,7 +109,7 @@ public class ShiroConfig {
     }
 
 
-    @Bean({"myFilterRegistration"})
+    @Bean
     public FilterRegistrationBean myFilterRegistration() {
         FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
         filterRegistration.setDispatcherTypes(DispatcherType.REQUEST, new DispatcherType[]{DispatcherType.ASYNC});
@@ -119,16 +120,17 @@ public class ShiroConfig {
         return filterRegistration;
     }
 
-
+    @Bean
     public KickoutSessionControlFilter createKickedOutSessionControlFilter() {
         return new KickoutSessionControlFilter();
     }
 
 
     @Bean
-    protected SecurityManager securityManager(SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager cacheManager ,ShiroProperties shiroProperties) {
+    protected SecurityManager securityManager(SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager cacheManager, ShiroProperties shiroProperties) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(getModularRealmAuthenticator());
+        securityManager.setAuthorizer(authorizer());
         List<Realm> reams = new ArrayList<>();
         reams.add(authorizingRealms(shiroProperties));
         securityManager.setRealms(reams);
@@ -160,6 +162,7 @@ public class ShiroConfig {
     public CacheManager cacheManager() {
         return new ShiroRedisCacheManager();
     }
+
 
     @Bean
     public SessionDAO sessionDAO() {
@@ -223,16 +226,21 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
+    @Bean
+    protected Authorizer authorizer() {
+        ModularRealmAuthorizer authorizer = new ModularRealmAuthorizer();
+        return authorizer;
+    }
 
     /**
      * Shiro Realm
      */
-    @Bean("authorizer")
-    public UserServiceRealm authorizingRealms(ShiroProperties shiroProperties) {
+    @Bean
+    public Realm authorizingRealms(ShiroProperties shiroProperties) {
         UserServiceRealm userRealm = new UserServiceRealm();
         //告诉realm,使用credentialsMatcher加密算法类来验证密文
         userRealm.setCredentialsMatcher(hashedCredentialsMatcher(shiroProperties));
-        userRealm.setCachingEnabled(false);
+        userRealm.setCachingEnabled(true);
         return userRealm;
     }
 

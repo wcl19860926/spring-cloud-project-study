@@ -57,6 +57,6 @@ public final class HashUtils {
     public static  void  main(String[] args){
 
 
-        System.out.println(md5Hash("123" ,"123" ,1024));
+        System.out.println(md5Hash("123" ,"123" ,16));
     }
 }

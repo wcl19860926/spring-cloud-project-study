@@ -11,6 +11,15 @@ spring:
     active: dev
   main:
     allow-bean-definition-overriding: true
+  resources:
+    static-locations:
+      - classpath:resources/static
+#i18n setting
+  messages:
+     basename: com/study/user/i18n/messages ,i18n/common/messages
+     cache-duration: 3600s
+     encoding: UTF-8
+
 mybatis:
   configLocation: classpath:mybatis-config.xml
   mapperLocations: classpath*:mapper/**/*.xml
