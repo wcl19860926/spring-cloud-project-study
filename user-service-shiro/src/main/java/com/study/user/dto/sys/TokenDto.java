@@ -6,7 +6,8 @@ import java.util.Date;
 @Data
 public class TokenDto {
     private String token;
-    private String clientId;
+    private String username;
+    private String password;
     private long expire;
     private Date created;
 }

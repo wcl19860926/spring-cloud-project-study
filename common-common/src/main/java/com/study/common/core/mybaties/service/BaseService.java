@@ -2,7 +2,7 @@ package com.study.common.core.mybaties.service;
 
 
 import com.study.common.base.dto.PageData;
-import com.study.common.base.dto.PageParams;
+import com.study.common.base.dto.PageQuery;
 import com.study.common.base.dto.ResultDto;
 import com.study.common.core.mybaties.entity.BaseEntity;
 import org.apache.ibatis.annotations.Param;
@@ -38,8 +38,8 @@ public interface BaseService<T extends BaseEntity, PK extends Serializable> {
     Integer selectCount(String statement, @Param("map") Map<String, Object> params);
 
 
-    ResultDto<PageData<T>> selectByPage(PageParams params);
+   PageData<T> selectByPage(PageQuery params);
 
-    public ResultDto<PageData<T>> selectByPage(String statement, PageParams params);
+   PageData<T> selectByPage(String statement, PageQuery params);
 
 }

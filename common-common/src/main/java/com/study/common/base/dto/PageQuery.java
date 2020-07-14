@@ -5,18 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class PageParams<String, Object> extends Page implements Map {
+public class PageQuery<String, Object> extends Page implements Map {
 
     private Map<String, Object> params = new HashMap();
 
 
-    public PageParams(int pageSize, int pageIndex, Map<String, Object> params) {
+    public PageQuery(int pageSize, int pageIndex, Map<String, Object> params) {
         super(pageSize, pageIndex);
         this.params = params;
     }
 
 
-    public PageParams(Page page, Map<String, Object> params) {
+    public PageQuery(Page page, Map<String, Object> params) {
         super(page.getPageSize(), page.getPageIndex());
         if (params == null) {
             params = new HashMap<>();
@@ -24,12 +24,16 @@ public class PageParams<String, Object> extends Page implements Map {
         this.params = params;
     }
 
-    public PageParams(Page page) {
+    public PageQuery(Page page) {
         super(page.getPageSize(), page.getPageIndex());
         this.params = new HashMap();
     }
 
-    public PageParams(int pageSize, int pageIndex) {
+    /**
+     * @param pageSize
+     * @param pageIndex
+     */
+    public PageQuery(int pageSize, int pageIndex) {
         super(pageSize, pageIndex);
         this.params = new HashMap<>();
     }
@@ -66,31 +70,31 @@ public class PageParams<String, Object> extends Page implements Map {
 
     @Override
     public java.lang.Object remove(java.lang.Object key) {
-        return null;
+        return params.remove(key);
     }
 
     @Override
     public void putAll(Map m) {
-
+        params.putAll(m);
     }
 
     @Override
     public void clear() {
-
+        params.clear();
     }
 
     @Override
     public Set keySet() {
-        return null;
+        return params.keySet();
     }
 
     @Override
     public Collection values() {
-        return null;
+        return params.values();
     }
 
     @Override
-    public Set<Entry> entrySet() {
-        return null;
+    public Set<Entry<String, Object>> entrySet() {
+        return params.entrySet();
     }
 }

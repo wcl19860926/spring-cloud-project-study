@@ -3,8 +3,7 @@ package com.study.common.core.mybaties.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.study.common.base.dto.PageData;
-import com.study.common.base.dto.PageParams;
-import com.study.common.base.dto.ResultDto;
+import com.study.common.base.dto.PageQuery;
 import com.study.common.core.id.service.IdGeneratorService;
 import com.study.common.core.mybaties.entity.BaseEntity;
 import com.study.common.core.mybaties.mapper.BaseMapper;
@@ -97,7 +96,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
      */
     @Override
     public List<T> selectList(String statement, @Param("map") Map<String, Object> params) {
-        List<T>  data = sqlSession.selectList(getMapperName() + statement, params);
+        List<T> data = sqlSession.selectList(getMapperName() + statement, params);
         if (CollectionUtils.isEmpty(data)) {
             return new ArrayList<>();
         }
@@ -115,21 +114,21 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
      * 获取mapperName
      */
     private String getMapperName() {
-        return this.getMapper().getClass().getInterfaces()[0].getName() +".";
+        return this.getMapper().getClass().getInterfaces()[0].getName() + ".";
     }
 
 
     @Override
-    public ResultDto<PageData<T>> selectByPage(PageParams params) {
+    public PageData<T> selectByPage(PageQuery params) {
         Page pageInfo = PageHelper.startPage(params.getPageIndex(), params.getPageSize());
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
         List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
         if (CollectionUtils.isEmpty(data)) {
-            data =  new ArrayList<>();
+            data = new ArrayList<>();
         }
         pageData.setData(data);
-        return ResultDto.success(pageData);
+        return pageData;
 
     }
 
@@ -138,16 +137,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
      * 自定义sql查询List<EntityMap>
      */
     @Override
-    public ResultDto<PageData<T>> selectByPage(String statement, PageParams params) {
+    public PageData<T> selectByPage(String statement, PageQuery params) {
         Page pageInfo = PageHelper.startPage(params.getPageIndex(), params.getPageSize());
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
         List<T> data = sqlSession.selectList(getMapperName() + statement, params);
         if (CollectionUtils.isEmpty(data)) {
-            data =  new ArrayList<>();
+            data = new ArrayList<>();
         }
         pageData.setData(data);
-        return ResultDto.success(pageData);
+        return pageData;
     }
 
 

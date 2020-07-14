@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 
 @Api(value = "系统登录管理", tags = "系统用户登录，登出管理")
@@ -76,12 +77,15 @@ public class SysUserController extends BaseController {
             logger.warn("对用户[" + username + "]进行登录验证..验证未通过,堆栈轨迹如下" + ae.toString());
             return ResultDto.fail(ErrorCodes.ACCOUNT_USERNAME_OR_PASSWORD_ERROR);
         }
-        //验证是否登录成功
-        TokenDto tokenDto = null;
+        //登录成功
+        TokenDto tokenDto = new TokenDto();
+        tokenDto.setCreated(new Date());
+        tokenDto.setToken((String) SecurityUtils.getSubject().getSession().getId());
+        tokenDto.setUsername(username);
         if (subject.isAuthenticated()) {
-            logger.info("用户[" + username + "]登录认证通过;当前用户的sessionId：" + SecurityUtils.getSubject().getSession().getId());
+            logger.info("用户[" + username + "]登录认证通过;当前用户的sessionId：" + tokenDto.getToken());
         }
-        return ResultDto.success("登录成功！");
+        return ResultDto.success(tokenDto);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

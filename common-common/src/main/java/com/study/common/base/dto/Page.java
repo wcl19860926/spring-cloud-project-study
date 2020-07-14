@@ -1,7 +1,6 @@
 package com.study.common.base.dto;
 
 
-import io.swagger.annotations.ApiModel;
 
 /**
  * vo 的分页数据格式
@@ -10,18 +9,21 @@ import io.swagger.annotations.ApiModel;
 
 
 
-@ApiModel(value = "分页参数", description = "分页参数")
+
+
 public class Page{
 
-    public static final int MAX_PAGE_SIZE = 100;
-    public static final int DEFAULT_TOTAL_RECORD = 0;
-    public static final int MIN_PAGE_INDEX = 1;
+    private  static final int MAX_PAGE_SIZE = 100;
+    private static final int DEFAULT_TOTAL_RECORD = 0;
+    private static final int MIN_PAGE_INDEX = 1;
     private int pageSize;
     private int totalPage;
     private int totalRecord;
     private int pageIndex;
 
-
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
 
     public Page(int pageSize, int pageIndex) {
         this.pageSize = pageSize;
