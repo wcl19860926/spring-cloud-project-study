@@ -141,7 +141,9 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.web" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
     <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="org.apache" level="INFO"/>
 

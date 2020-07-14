@@ -5,14 +5,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class PageParams<String ,Object>   extends Page  implements Map {
+public class PageParams<String, Object> extends Page implements Map {
 
-    private  Map<String , Object >  params  =  new HashMap();
+    private Map<String, Object> params = new HashMap();
 
 
     public PageParams(int pageSize, int pageIndex, Map<String, Object> params) {
         super(pageSize, pageIndex);
         this.params = params;
+    }
+
+
+    public PageParams(Page page, Map<String, Object> params) {
+        super(page.getPageSize(), page.getPageIndex());
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        this.params = params;
+    }
+
+    public PageParams(Page page) {
+        super(page.getPageSize(), page.getPageIndex());
+        this.params = new HashMap();
     }
 
     public PageParams(int pageSize, int pageIndex) {
@@ -37,7 +51,7 @@ public class PageParams<String ,Object>   extends Page  implements Map {
 
     @Override
     public boolean containsValue(java.lang.Object value) {
-        return this.params.containsValue( value);
+        return this.params.containsValue(value);
     }
 
     @Override

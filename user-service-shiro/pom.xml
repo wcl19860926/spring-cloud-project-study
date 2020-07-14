@@ -124,7 +124,7 @@
             <resource> <!-- 配置需要被替换的资源文件路径, properties 应该在 src/main/resource 目录下 -->
                 <directory>src/main/resources</directory>
                 <excludes>
-                    <exclude>static/**</exclude>
+                    <!--<exclude>static/**</exclude>-->
                     <exclude>ftl/**</exclude>
                 </excludes>
                 <filtering>true</filtering> <!-- 是否使用过滤器 -->

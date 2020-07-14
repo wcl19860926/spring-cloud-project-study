@@ -89,11 +89,12 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- 过滤链定义，从上向下顺序执行
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/api/sysUser/auth/**", "anon");
+       /* filterChainDefinitionMap.put("/api/sysUser/auth/**", "anon");
         filterChainDefinitionMap.put("/swagger-ui/**", "anon");
         filterChainDefinitionMap.put("/index/**", "anon");
         filterChainDefinitionMap.put("/error/**", "anon");
-        filterChainDefinitionMap.put("/api/v1/**", "authc,kickout");
+        filterChainDefinitionMap.put("/api/v1/**", "authc,kickout");*/
+        filterChainDefinitionMap.put("/**", "anon");
         return createShiroFilterFactoryBean(securityManager, filterChainDefinitionMap);
     }
 

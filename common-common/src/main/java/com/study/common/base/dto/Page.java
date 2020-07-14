@@ -1,12 +1,16 @@
 package com.study.common.base.dto;
 
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * vo 的分页数据格式
  *
  */
 
 
+
+@ApiModel(value = "分页参数", description = "分页参数")
 public class Page{
 
     public static final int MAX_PAGE_SIZE = 100;

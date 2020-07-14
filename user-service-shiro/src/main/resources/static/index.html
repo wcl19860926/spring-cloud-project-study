@@ -29,8 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="password">密码</label>
-                        <input type="password" class="form-control input-sm" id="password" placeholder="请输入密码"
-                               value="111111">
+                        <input type="password" class="form-control input-sm" id="password" placeholder="请输入密码">
                     </div>
                     <button type="button" id="btnLogin" class="btn btn-default btn-sm">登录</button>
                 </form>
@@ -47,9 +46,9 @@
         <div class="col-md-4">
             <ul>
                 <li><a href="swagger-ui.html" target="_blank">swagger API 文档</a></li>
-                <li><a href="druid/" target="_blank">数据源管理器(用户名：root 密码：111111)</a></li>
+                <li><a href="druid/" target="_blank">数据源管理器</a></li>
 
-                <li><a href="actuator/conditions" target="_blank">Spring 自动配置</a></li>
+                <!--<li><a href="actuator/conditions" target="_blank">Spring 自动配置</a></li>
                 <li><a href="actuator/configprops" target="_blank">Spring 属性配置</a></li>
                 <li><a href="actuator/beans" target="_blank">Spring beans</a></li>
                 <li><a href="actuator/heapdump" target="_blank">Spring 线程栈</a></li>
@@ -57,8 +56,8 @@
                 <li><a href="actuator/health" target="_blank">Spring 健康指标</a></li>
                 <li><a href="actuator/info" target="_blank">Spring 应用信息</a></li>
                 <li><a href="actuator/mappings" target="_blank">Spring url映射</a></li>
-                <li><a href="actuator/httptrace" target="_blank">Spring 追踪信息</a></li>
-                <li>-----------------------------------</li>
+                <li><a href="actuator/httptrace" target="_blank">Spring 追踪信息</a></li>-->
+
             </ul>
 
         </div>
@@ -81,7 +80,7 @@
 
     function checkOnline() {
         $.ajax({
-            url: "api/v1/context",
+            url: "/api/sysUser/auth/me",
             type: "GET",
             cache: false,
             dataType: 'json',
@@ -111,7 +110,7 @@
         var password = $("#password").val();
         var data = {"username": username, "password": password};
         $.post({
-            url: "dev/login",
+            url: "/api/sysUser/auth/login",
             type: "POST",
             contentType: "application/json",
             processData: false,
@@ -128,7 +127,7 @@
     }
 
     function logoutAction() {
-        $.get("dev/logout", function () {
+        $.get("/api/sysUser/auth/logout", function () {
             showUserPanel(null);
         });
     }
