@@ -79,7 +79,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
 
     @Override
     public List<T> selectList(Map<String, Object> params) {
-        List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
+        List<T> data = getMapper().selectList(params);
         if (CollectionUtils.isEmpty(data)) {
             return new ArrayList<>();
         }
@@ -123,7 +123,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializa
         Page pageInfo = PageHelper.startPage(params.getPageIndex(), params.getPageSize());
         PageData pageData = new PageData(pageInfo.getPageNum(), pageInfo.getPageSize());
         pageData.setTotalRecord((int) pageInfo.getTotal());
-        List<T> data = sqlSession.selectList(getMapperName() + SELECT_BY_PAGE_LIST, params);
+        List<T> data =  getMapper().selectList(params);
         if (CollectionUtils.isEmpty(data)) {
             data = new ArrayList<>();
         }

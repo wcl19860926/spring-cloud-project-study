@@ -75,7 +75,6 @@
             logoutAction();
         });
         checkOnline();
-        showVersion();
     });
 
     function checkOnline() {
@@ -85,7 +84,7 @@
             cache: false,
             dataType: 'json',
             success: function (response) {
-                if (response.errorCode == 401) {
+                if (response.code == 401) {
                     showUserPanel(null);
                 } else {
                     showUserPanel(response.data.username);
@@ -94,14 +93,14 @@
         });
     }
 
-    function showUserPanel(username) {
-        if (username == null) { // show login panel
+    function showUserPanel(data) {
+        if (data == null) { // show login panel
             $("#login_panel").show();
             $("#user_panel").hide();
         } else { // user panel
             $("#login_panel").hide();
             $("#user_panel").show();
-            $("#user_span").text(username);
+            $("#user_span").text(data.username);
         }
     }
 
@@ -117,10 +116,10 @@
             dataType: 'json',
             data: JSON.stringify(data),
             success: function (response) {
-                if (response.errorCode == 0) {
+                if (response.code == 0) {
                     showUserPanel(response.data);
                 } else {
-                    alert("登录失败-" + response.msg);
+                    alert("登录失败-" + response.message);
                 }
             }
         });
@@ -132,12 +131,7 @@
         });
     }
 
-    function showVersion() {
-        $.get("api/v1/about", function (response) {
-            var version = response.name + "(version:" + response.version + ", build on:" + response.date + ")";
-            $("#span_ver").text(version);
-        });
-    }
+
 
 
 </script>

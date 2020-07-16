@@ -5,11 +5,14 @@ import com.study.common.base.dto.Page;
 import com.study.common.base.dto.PageQuery;
 import com.study.common.base.dto.ResultDto;
 import com.study.common.core.web.controller.BaseController;
+import com.study.common.i18n.I18nMessageHelper;
 import com.study.user.service.sys.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +43,42 @@ public class SysUserManagerController extends BaseController {
                     defaultValue = "10"),
 
     })
+
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public ResultDto list(@RequestParam  Integer pageIndex ,
                           @RequestParam  Integer  pageSize) throws Exception {
+        PageQuery pageParams = new PageQuery(pageSize , pageIndex);
+        I18nMessageHelper.getI18nMessage("auth.session.invalid");
+        I18nMessageHelper.getI18nMessage("hello");
+        return ResultDto.success(sysUserService.selectByPage(pageParams));
+    }
+
+
+
+    @RequiresPermissions("456")
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ResultDto test(@RequestParam  Integer pageIndex ,
+                          @RequestParam  Integer  pageSize) throws Exception {
+        PageQuery pageParams = new PageQuery(pageSize , pageIndex);
+        return ResultDto.success(sysUserService.selectByPage(pageParams));
+    }
+
+
+
+    @RequiresPermissions(value = "123,456" ,logical = Logical.OR)
+    @RequestMapping(value = "/testOR", method = RequestMethod.POST)
+    public ResultDto testOR(@RequestParam  Integer pageIndex ,
+                          @RequestParam  Integer  pageSize) throws Exception {
+        PageQuery pageParams = new PageQuery(pageSize , pageIndex);
+        return ResultDto.success(sysUserService.selectByPage(pageParams));
+    }
+
+
+
+    @RequiresPermissions(value = "123,456" ,logical = Logical.OR)
+    @RequestMapping(value = "/testAnd", method = RequestMethod.POST)
+    public ResultDto testAnd(@RequestParam  Integer pageIndex ,
+                            @RequestParam  Integer  pageSize) throws Exception {
         PageQuery pageParams = new PageQuery(pageSize , pageIndex);
         return ResultDto.success(sysUserService.selectByPage(pageParams));
     }

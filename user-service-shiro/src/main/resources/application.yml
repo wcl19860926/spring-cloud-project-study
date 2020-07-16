@@ -16,7 +16,7 @@ spring:
       - classpath:/static
 #i18n setting
   messages:
-     basename: com/study/user/i18n/messages ,i18n/common/messages
+     basename: i18n/biz/messages,i18n/biz/messages
      cache-duration: 3600s
      encoding: UTF-8
 
