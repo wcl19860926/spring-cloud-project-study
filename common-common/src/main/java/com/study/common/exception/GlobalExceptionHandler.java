@@ -5,15 +5,17 @@ import com.study.common.base.error.codes.ErrorCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+
 /**
- * @author : zhaoxuan
- * @date : 2019/11/1
+ * 子类应继承此， 并且此类不应该标记
+ * @RestControllerAdvice ，
+ * 否则，spring会注则两个ExceptionHandlerExceptionResolver
+ * 在使用时，找到一个就使用
  */
 @Slf4j
-@RestControllerAdvice
+
 public class GlobalExceptionHandler {
 
     /**
@@ -30,7 +32,7 @@ public class GlobalExceptionHandler {
      * 文件异常
      */
     @ExceptionHandler(value = MaxUploadSizeExceededException.class)
-    public ResultDto bizExceptionHandler(MaxUploadSizeExceededException exception) {
+    public ResultDto maxUploadSizeExceededException(MaxUploadSizeExceededException exception) {
         log.error("文件异常:{}", exception.getMessage());
         return ResultDto.fail(ErrorCodes.FILE_EXCEED_MAX_SIZE, "");
     }
@@ -39,7 +41,7 @@ public class GlobalExceptionHandler {
      * 处理自定义业务异常
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
-    public ResultDto bizExceptionHandler(MissingServletRequestParameterException exception) {
+    public ResultDto missingServletRequestParameterException(MissingServletRequestParameterException exception) {
         log.error("业务异常:{}", exception.getMessage());
         return ResultDto.fail(ErrorCodes.ARGS_NOT_LEGAL, exception.getParameterName());
     }
