@@ -9,6 +9,13 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
+/**
+ * spring 在
+ * @See org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#initExceptionHandlerAdviceCache() 此处初始化
+ * 在下面方法后使用
+ * org.springframework.web.servlet.DispatcherServlet#processHandlerException(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
+ */
 @Slf4j
 @RestControllerAdvice
 public class UserServiceExceptionHandler extends GlobalExceptionHandler {
