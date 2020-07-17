@@ -17,7 +17,7 @@
 
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost/boo-shiro?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;serverTimezone=GMT-8"
+                        connectionURL="jdbc:mysql://localhost/gateway?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;serverTimezone=GMT-8"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -28,7 +28,7 @@
 
 
 
-        <javaModelGenerator targetPackage="com.study.user.entity.sys"
+        <javaModelGenerator targetPackage="com.study.gateway.admin.entity.route"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -36,16 +36,16 @@
         </javaModelGenerator>
 
 
-        <sqlMapGenerator targetPackage="xml.sys"
+        <sqlMapGenerator targetPackage="xml.route"
                          targetProject="src/main/resources/mapper">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.user.mapper.sys"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.study.gateway.admin.mapper.route"
                              targetProject="src/main/java/">
             <property name="enableSubPackages" value="true"/>
             <property name="superMapper" value="com.study.common.core.mybaties.mapper.BaseMapper"/>
-            <property name="servicePackage" value="com.study.user.service.sys" />
-            <property name="controllerPackage" value="com.study.user.controller.sys" />
+            <property name="servicePackage" value="com.study.gateway.admin.service.route" />
+            <property name="controllerPackage" value="com.study.gateway.admin.controller.route" />
             <property name="baseService" value="com.study.common.core.mybaties.service.BaseService"/>
             <property name="baseServiceImpl" value="com.study.common.core.mybaties.service.impl.BaseServiceImpl"/>
             <property name="baseController" value="com.study.common.core.web.controller.BaseController"/>
@@ -66,23 +66,21 @@
         -->
 
 
-        <table schema="root"  tableName="sys_user"    domainObjectName="SysUser" catalog="boo-shiro">
+        <table schema="root"  tableName="gateway_route"    domainObjectName="GatewayRoute" catalog="">
             <property name="useActualColumnNames" value="true"/>
         </table>
-    <!--   <table schema="boo-shiro" tableName="sys_role" domainObjectName="SysRole">
+       <table schema="root" tableName="gateway_route_predicate" domainObjectName="GatewayRoutePredicate" catalog="">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table schema="boo-shiro" tableName="sys_role_user" domainObjectName="SysRoleUser">
+        <table schema="root" tableName="gateway_route_predicate_args" domainObjectName="GatewayRoutePredicateArgs" catalog="">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table schema="root"  catalog="boo-shiro" tableName="sys_permission" domainObjectName="SysPermission">
+        <table schema="root"  tableName="gateway_route_filter"  domainObjectName="GatewayRouteFilter" catalog="">
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table schema="boo-shiro" tableName="sys_permission_role" domainObjectName="SysPermissionRole">
+        <table schema="root" tableName="gateway_route_filter_args" domainObjectName="GatewayRouteFilterArgs" catalog="">
             <property name="useActualColumnNames" value="true"/>
-        </table>-->
-
-
+        </table>
 
     </context>
 </generatorConfiguration>
