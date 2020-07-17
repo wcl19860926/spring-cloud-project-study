@@ -19,6 +19,11 @@ spring:
      basename: i18n/gateway/admin/messages,i18n/common/messages
      cache-duration: 3600s
      encoding: UTF-8
+  thymeleaf:
+    prefix: classpath*:/templates/
+    cache: false
+    encoding: UTF-8
+    suffix: html
 
 mybatis:
   configLocation: classpath:mybatis-config.xml

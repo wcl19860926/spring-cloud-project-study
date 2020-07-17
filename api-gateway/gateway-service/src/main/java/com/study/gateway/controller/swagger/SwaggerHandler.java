@@ -1,4 +1,4 @@
-package com.study.gateway.config;
+package com.study.gateway.controller.swagger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

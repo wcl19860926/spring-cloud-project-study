@@ -3,7 +3,7 @@
 /*==============================================================*/
 create table gateway_route
 (
-   id                   bigint unsigned not null auto_increment comment 'id',
+   id                   bigint unsigned not null  comment 'id',
    route_id             varchar(30) not null comment '路由id',
    system_id            varchar(30) not null default '' comment '路由系统id',
    system_name          varchar(50) not null default '' comment '路由系统名称',
@@ -23,7 +23,7 @@ create table gateway_route
 /*==============================================================*/
 create table gateway_route_predicate
 (
-   id                   bigint unsigned not null auto_increment comment 'id',
+   id                   bigint unsigned not null  comment 'id',
    route_id             varchar(30) not null default '' comment 'route_id 关联路由表',
    predicate_id         varchar(30) not null comment '断言id',
    predicate_name       varchar(50) not null default '' comment '断言名称',
@@ -42,7 +42,7 @@ create table gateway_route_predicate
 /*==============================================================*/
 create table gateway_route_predicate_args
 (
-   id                   bigint unsigned not null auto_increment comment 'id',
+   id                   bigint unsigned not null  comment 'id',
    predicate_id         varchar(30) not null default '' comment '关联断言表 predicate_id',
    predicate_arg_id     varchar(30) not null comment '断言参数id',
    args_name            varchar(100) not null comment '参数名',
@@ -61,7 +61,7 @@ create table gateway_route_predicate_args
 /*==============================================================*/
 create table gateway_route_filter
 (
-   id                   bigint unsigned not null auto_increment comment 'id',
+   id                   bigint unsigned not null  comment 'id',
    route_id             varchar(30) not null default '' comment '关联路由表 router_id',
    filter_id            varchar(30) not null comment '过滤器id',
    filter_name          varchar(100) not null default '' comment '过滤器名称',
@@ -81,7 +81,7 @@ create table gateway_route_filter
 /*==============================================================*/
 create table gateway_route_filter_args
 (
-   id                   bigint unsigned not null auto_increment comment 'id',
+   id                   bigint unsigned not null  comment 'id',
    filter_id            varchar(30) not null default '' comment '关联过滤器表 filter_id',
    filter_args_id       varchar(30) not null comment '过滤器参数id',
    args_name            varchar(100) not null comment '参数名',
