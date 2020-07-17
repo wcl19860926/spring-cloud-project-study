@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author
  * @date Fri Jul 17 14:37:55 CST 2020
  */
-@Service(value = "gatewayRoutePredicateServiceImpl")
+@Service(value = "gatewayRoutePredicateService")
 public class GatewayRoutePredicateServiceImpl extends  BaseServiceImpl<GatewayRoutePredicate , Long> implements GatewayRoutePredicateService{
 
 

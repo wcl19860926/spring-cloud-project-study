@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author
  * @date Fri Jul 17 14:37:55 CST 2020
  */
-@Service(value = "gatewayRouteFilterArgsServiceImpl")
+@Service(value = "gatewayRouteFilterArgsService")
 public class GatewayRouteFilterArgsServiceImpl extends  BaseServiceImpl<GatewayRouteFilterArgs , Long> implements GatewayRouteFilterArgsService{
 
 
