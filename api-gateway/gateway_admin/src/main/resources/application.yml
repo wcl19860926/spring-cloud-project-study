@@ -20,10 +20,9 @@ spring:
      cache-duration: 3600s
      encoding: UTF-8
   thymeleaf:
-    prefix: classpath*:/templates/
     cache: false
     encoding: UTF-8
-    suffix: html
+    mode: HTML
 mybatis:
   configLocation: classpath:mybatis-config.xml
   mapperLocations: classpath*:mapper/**/*.xml

@@ -11,6 +11,7 @@ public class IndexController {
     // 系统首页
     @GetMapping("/index")
     public String index(ModelMap mmap) {
+        mmap.put("userName" ,"王成林");
 
 
         return "index";
@@ -24,5 +25,13 @@ public class IndexController {
 
 
         return "error/error";
+    }
+
+
+    @GetMapping("/welcome")
+    public String welcome(ModelMap mmap) {
+
+
+        return "welcome";
     }
 }
