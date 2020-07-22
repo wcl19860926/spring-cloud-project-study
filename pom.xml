@@ -16,6 +16,7 @@
         <module>mybaties-simple-generator</module>
         <module>cus_generator</module>
         <module>redission-lock</module>
+        <module>sys_manager</module>
     </modules>
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>

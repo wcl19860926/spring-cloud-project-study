@@ -24,12 +24,13 @@ spring:
     cache: false
     encoding: UTF-8
     suffix: html
-
 mybatis:
   configLocation: classpath:mybatis-config.xml
   mapperLocations: classpath*:mapper/**/*.xml
   typeAliasesPackage: com.study.gateway.admin.entity.*
 server:
   port: 8080
+  error:
+    path: /error
 
 
