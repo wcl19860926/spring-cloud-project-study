@@ -18,52 +18,59 @@ public  class  GatewayRoute  extends  BaseEntity<Long>{
 private static final long serialVersionUID=1L;
 
 
+
+/**
+* id
+*/
+@ApiModelProperty(value = "id")
+private   Long  id;
+
 /**
 * 路由id
 */
 @ApiModelProperty(value = "路由id")
-private   String  route_id;
+private   String  routeId;
 
 /**
 * 路由系统id
 */
 @ApiModelProperty(value = "路由系统id")
-private   String  system_id;
+private   String  systemId;
 
 /**
 * 路由系统名称
 */
 @ApiModelProperty(value = "路由系统名称")
-private   String  system_name;
+private   String  systemName;
 
 /**
 * uri
 */
 @ApiModelProperty(value = "uri")
-private   String  route_uri;
+private   String  routeUri;
 
 /**
 * 优先级
 */
 @ApiModelProperty(value = "优先级")
-private   Integer  route_priority;
+private   Integer  routePriority;
 
 /**
 * 是否删除
 */
 @ApiModelProperty(value = "是否删除")
-private   Boolean  is_delete;
+private   Boolean  isDelete;
 
 /**
 * 创建时间
 */
 @ApiModelProperty(value = "创建时间")
-private Date create_time;
+private   Date  createTime;
 
 /**
 * 更新时间
 */
 @ApiModelProperty(value = "更新时间")
-private   Date  update_time;
+private Date updateTime;
 
 }

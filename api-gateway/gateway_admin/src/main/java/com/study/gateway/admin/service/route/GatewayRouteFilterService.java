@@ -1,7 +1,10 @@
 package com.study.gateway.admin.service.route;
 
 import com.study.common.core.mybaties.service.BaseService;
+import com.study.gateway.admin.dto.route.GatewayRouteFilterDto;
 import com.study.gateway.admin.entity.route.GatewayRouteFilter;
+
+import java.util.List;
 
 /**
  *  服务类
@@ -13,5 +16,8 @@ import com.study.gateway.admin.entity.route.GatewayRouteFilter;
 public interface GatewayRouteFilterService  extends   BaseService<GatewayRouteFilter , Long> {
 
 
+    Integer  deleteByRoteId(String routeId);
+
+    List<GatewayRouteFilterDto>  findByRouteId(String routeId);
 }
 

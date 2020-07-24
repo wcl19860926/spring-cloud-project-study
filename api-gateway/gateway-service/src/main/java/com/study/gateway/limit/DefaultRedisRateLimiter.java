@@ -1,4 +1,4 @@
-package com.study.gateway.config;
+package com.study.gateway.limit;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;

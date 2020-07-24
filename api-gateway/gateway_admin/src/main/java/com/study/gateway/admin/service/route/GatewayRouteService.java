@@ -13,5 +13,11 @@ import com.study.gateway.admin.entity.route.GatewayRoute;
 public interface GatewayRouteService  extends   BaseService<GatewayRoute , Long> {
 
 
+    Integer  deleteByRouteId(String routeId);
+
+
+    GatewayRoute  findByRouteId(String routeId);
+
+
 }
 

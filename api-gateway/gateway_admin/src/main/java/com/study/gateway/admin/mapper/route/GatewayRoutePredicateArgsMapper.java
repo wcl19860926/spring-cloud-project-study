@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface   GatewayRoutePredicateArgsMapper   extends  BaseMapper<GatewayRoutePredicateArgs , Long> {
 
+
+    Integer  deleteByPredicateId(String predicateId);
 }

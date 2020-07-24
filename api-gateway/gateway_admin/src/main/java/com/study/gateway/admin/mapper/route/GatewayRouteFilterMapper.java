@@ -7,4 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface   GatewayRouteFilterMapper   extends  BaseMapper<GatewayRouteFilter , Long> {
 
+
+    Integer  deleteByRoteId(String routeId);
+
+
 }

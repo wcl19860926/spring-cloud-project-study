@@ -18,46 +18,47 @@ public  class  GatewayRouteFilter  extends  BaseEntity<Long>{
 private static final long serialVersionUID=1L;
 
 
+
 /**
 * 关联路由表 router_id
 */
 @ApiModelProperty(value = "关联路由表 router_id")
-private   String  route_id;
+private   String  routeId;
 
 /**
 * 过滤器id
 */
 @ApiModelProperty(value = "过滤器id")
-private   String  filter_id;
+private   String  filterId;
 
 /**
 * 过滤器名称
 */
 @ApiModelProperty(value = "过滤器名称")
-private   String  filter_name;
+private   String  filterName;
 
 /**
 * 过滤器优先级
 */
 @ApiModelProperty(value = "过滤器优先级")
-private   Integer  filter_priority;
+private   Integer  filterPriority;
 
 /**
 * 是否删除
 */
 @ApiModelProperty(value = "是否删除")
-private   Boolean  is_delete;
+private   Boolean  isDelete;
 
 /**
 * 创建时间
 */
 @ApiModelProperty(value = "创建时间")
-private   Date  create_time;
+private Date createTime;
 
 /**
 * 更新时间
 */
 @ApiModelProperty(value = "更新时间")
-private Date update_time;
+private   Date  updateTime;
 
 }

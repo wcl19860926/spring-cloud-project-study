@@ -20,46 +20,47 @@ private static final long serialVersionUID=1L;
 
 
 
+
 /**
 * route_id 关联路由表
 */
 @ApiModelProperty(value = "route_id 关联路由表")
-private   String  route_id;
+private   String  routeId;
 
 /**
 * 断言id
 */
 @ApiModelProperty(value = "断言id")
-private   String  predicate_id;
+private   String  predicateId;
 
 /**
 * 断言名称
 */
 @ApiModelProperty(value = "断言名称")
-private   String  predicate_name;
+private   String  predicateName;
 
 /**
 * 断言优先级
 */
 @ApiModelProperty(value = "断言优先级")
-private   Integer  predicate_priority;
+private   Integer  predicatePriority;
 
 /**
 * 是否删除
 */
 @ApiModelProperty(value = "是否删除")
-private   Boolean  is_delete;
+private   Boolean  isDelete;
 
 /**
 * 创建时间
 */
 @ApiModelProperty(value = "创建时间")
-private   Date  create_time;
+private Date createTime;
 
 /**
 * 更新时间
 */
 @ApiModelProperty(value = "更新时间")
-private Date update_time;
+private   Date  updateTime;
 
 }
