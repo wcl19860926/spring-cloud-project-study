@@ -13,6 +13,8 @@
     <modules>
         <module>gateway-service</module>
         <module>gateway_admin</module>
+        <module>gateway_test_service1</module>
+        <module>gateway_test_service2</module>
     </modules>
  <dependencies>
  </dependencies>

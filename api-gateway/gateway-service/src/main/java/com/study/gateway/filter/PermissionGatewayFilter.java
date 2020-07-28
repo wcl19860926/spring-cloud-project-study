@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 @Slf4j
-public class AccessGatewayFilter implements GlobalFilter {
+public class PermissionGatewayFilter implements GlobalFilter {
 
     private static final String X_CLIENT_TOKEN_USER = "x-client-token-user";
     private static final String X_CLIENT_TOKEN = "x-client-token";

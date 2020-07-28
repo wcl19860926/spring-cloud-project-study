@@ -8,6 +8,7 @@ public class ErrorCodes {
     public static final ErrorCode SYS_ERROR_403 = new ErrorCode(403, "auth.no.permission");
     public static final ErrorCode SYS_ERROR_404 = new ErrorCode(404, "system.resource.not.found");
     public static final ErrorCode SYS_ERROR_500 = new ErrorCode(500, "system.exception.error");
+    public static final ErrorCode SYS_ERROR_BUSY = new ErrorCode(510, "system.exception.busy");
     /**
      * 操作异常
      */

@@ -18,10 +18,10 @@ public class RequestRateLimiterConfig {
      *
      * @return 限流key
      */
-    @Bean
     @Primary
-    public KeyResolver remoteAddressKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+    @Bean(value = "remoteAddrKeyResolver")
+    public KeyResolver remoteAddrKeyResolver() {
+        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
     }
 
     /**
@@ -29,7 +29,7 @@ public class RequestRateLimiterConfig {
      *
      * @return 限流key
      */
-    @Bean
+    @Bean(value = "apiKeyResolver")
     public KeyResolver apiKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getPath().value());
     }
@@ -39,7 +39,7 @@ public class RequestRateLimiterConfig {
      *
      * @return 限流key
      */
-    @Bean
+    @Bean(value = "userKeyResolver")
     public KeyResolver userKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("username"));
     }

@@ -1,0 +1,14 @@
+debug: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@localhost:9001/eureka/
+  instance:
+    prefer-ip-address: true
+server:
+  port: 9700
+spring:
+  apllication:
+    debug: ''
+  application:
+    name: consumer-service1
