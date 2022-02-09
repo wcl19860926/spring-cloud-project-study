@@ -33,7 +33,7 @@
         <apache.commons.beanutils>1.9.3</apache.commons.beanutils>
         <com.google.zxing.version>3.1.0</com.google.zxing.version>
         <swagger2.version>2.9.2</swagger2.version>
-        <shiro-spring.version>1.5.3</shiro-spring.version>
+        <shiro-spring.version>1.7.1</shiro-spring.version>
         <poi.version>3.17</poi.version>
 
         <jackson.version>2.9.9</jackson.version>
