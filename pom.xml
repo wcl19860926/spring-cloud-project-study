@@ -39,7 +39,7 @@
         <jackson.version>2.9.9</jackson.version>
         <jackson.datatype>2.10.1</jackson.datatype>
         <fastjson.version>1.2.62</fastjson.version>
-        <jackson-databind.varsion>2.9.10.5</jackson-databind.varsion>
+        <jackson-databind.varsion>2.12.7.1</jackson-databind.varsion>
         <httpclient.version>4.5.10</httpclient.version>
 
         <com.study.commont.model.version>1.0-SNAPSHOT</com.study.commont.model.version>
